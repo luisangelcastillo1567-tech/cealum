@@ -49,6 +49,13 @@ section{position:relative;z-index:1;padding:120px 24px}
 .vision-label{font-family:'Cinzel',serif;font-size:0.85rem;letter-spacing:0.15em;color:#d4a843;text-transform:uppercase;margin-bottom:12px}
 .vision-text{font-size:0.95rem;color:#8a7a5a;line-height:1.6}
 
+/* ORIGIN STORY */
+.origin-section{text-align:center;background:linear-gradient(180deg,transparent,rgba(5,7,9,0.6),transparent)}
+.origin-inner{max-width:720px;margin:0 auto}
+.origin-title{font-family:'Cinzel Decorative',serif;font-size:clamp(1.4rem,3.5vw,2rem);color:#d4a843;line-height:1.3;margin-bottom:50px}
+.origin-text{font-size:1.05rem;color:#8a7a5a;font-style:italic;line-height:2;margin-bottom:30px;text-align:center}
+.origin-closing{font-family:'Cinzel',serif;font-size:clamp(0.85rem,2vw,1.05rem);letter-spacing:0.15em;color:#d4a843;text-transform:uppercase;line-height:1.8;margin-top:50px}
+
 /* PRODUCTS */
 .products-section{background:linear-gradient(180deg,transparent,rgba(212,168,67,0.02),transparent)}
 .products-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:60px}
@@ -109,6 +116,7 @@ footer p{font-size:0.85rem;color:#3a3218;letter-spacing:0.1em}
   <a href="#" class="nav-brand">CAELUM</a>
   <ul class="nav-links">
     <li><a href="#vision">Vision</a></li>
+    <li><a href="#origin">Story</a></li>
     <li><a href="#products">Products</a></li>
     <li><a href="#learn">Inside</a></li>
     <li><a href="#offer">Pricing</a></li>
@@ -152,6 +160,23 @@ footer p{font-size:0.85rem;color:#3a3218;letter-spacing:0.1em}
         <div class="vision-label">Lifetime Access</div>
         <p class="vision-text">One payment. No subscriptions. Every future update included forever</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORIGIN STORY -->
+<section id="origin" class="origin-section">
+  <div class="section-inner origin-inner">
+    <div class="section-badge">The Beginning</div>
+    <h2 class="origin-title">I Started With Nothing.<br>No Connections. No Capital. No Degree.</h2>
+    <div class="divider-line" style="margin:40px auto"></div>
+    <p class="origin-text">Two years ago I was broke, scrolling through job listings at 2 AM, wondering why the world seemed designed for people who already had everything. I had a laptop and a wifi connection. That was it.</p>
+    <p class="origin-text">Then I discovered something the gatekeepers didn't want me to know: AI had leveled the playing field. Overnight, a single person with the right tools could deliver what used to require a full agency. I didn't need permission. I needed a system.</p>
+    <p class="origin-text">I built that system. Within 90 days, I was earning more than my old salary. Within six months, I had a roster of clients who thought they were hiring a team. They were hiring me — and my AI stack.</p>
+    <p class="origin-text">CAELUM exists because I remember what it felt like to have nothing but hunger. If that's you right now — if you're tired of waiting, tired of asking, tired of being told to be patient — this is your signal.</p>
+    <div class="origin-closing">
+      The void above all is not empty.<br>
+      It's where the next version of you is waiting.
     </div>
   </div>
 </section>
@@ -269,7 +294,7 @@ footer p{font-size:0.85rem;color:#3a3218;letter-spacing:0.1em}
 <a href="admin.html" class="admin-link">ADMIN</a>
 
 <!-- PAYPAL -->
-<script src="https://www.paypal.com/sdk/js?client-id=BAAtEFxDaTmn_qnPdSTHUNHbtXT1-0buI3gUsXx52NAl4Z8ef8DPT06ZZNNjrTGEChGBiiu1dKSFPduXlQ"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=AUe6X3A9mZ1YVWp1BaH7x-H1-bU8SWuJkMrwfLFGCqowbVpapnS2Vqh8KopqeRhu3gtsdhaqGNkHnBiF&currency=USD"></script>
 <script>
 if(localStorage.getItem('blueprint-access-code')){window.location.href='dashboard.html'}
 paypal.Buttons({
