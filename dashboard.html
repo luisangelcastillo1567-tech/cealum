@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Products — CAELUM</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link href="smooth-scroll.css" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#080a0f;color:#c9b97a;font-family:'EB Garamond',serif;min-height:100vh;overflow-x:hidden}
+  canvas#stars{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+
+  .wrap{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:60px 24px 100px}
+
+  .header{text-align:center;margin-bottom:60px}
+  .badge{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.3em;color:#6b5a2a;text-transform:uppercase;margin-bottom:24px}
+  h1{font-family:'Cinzel Decorative',serif;font-size:clamp(2rem,5vw,3.2rem);color:#d4a843;line-height:1.15;margin-bottom:16px;text-shadow:0 0 40px rgba(212,168,67,0.15)}
+  .welcome-text{font-size:1.1rem;color:#8a7a5a;line-height:1.8;margin-bottom:40px}
+
+  .divider{width:80px;height:1px;background:linear-gradient(90deg,transparent,#d4a843,transparent);margin:40px auto}
+
+  .products-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;margin:40px 0}
+
+  .product-card{border:1px solid #1e1a10;background:rgba(212,168,67,0.03);border-radius:4px;padding:32px;transition:all 0.3s;cursor:pointer}
+  .product-card:hover{border-color:#d4a843;background:rgba(212,168,67,0.08);transform:translateY(-5px)}
+
+  .product-icon{font-size:48px;margin-bottom:16px}
+  .product-title{font-family:'Cinzel',serif;font-size:1.2rem;color:#d4a843;margin-bottom:12px;letter-spacing:0.1em}
+  .product-desc{font-size:0.95rem;color:#7a6e58;line-height:1.8;margin-bottom:20px}
+  .product-btn{display:inline-block;font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.15em;color:#d4a843;border:1px solid #d4a843;padding:12px 24px;border-radius:4px;text-decoration:none;transition:all 0.3s;text-transform:uppercase}
+  .product-btn:hover{background:#d4a843;color:#080a0f}
+
+  .access-info{text-align:center;padding:20px;background:rgba(212,168,67,0.05);border-radius:4px;margin:40px 0;border-left:3px solid #d4a843}
+  .access-info-text{color:#8a7a5a;font-size:0.95rem}
+  .access-code{font-family:monospace;color:#d4a843;margin-top:8px;font-size:0.9rem;word-break:break-all}
+
+  .footer-nav{display:flex;justify-content:space-between;margin-top:60px;padding-top:40px;border-top:1px solid #1e1a10}
+  .nav-link{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.15em;color:#4a3e20;text-decoration:none;text-transform:uppercase;transition:color 0.3s}
+  .nav-link:hover{color:#d4a843}
+
+  h2{font-family:'Cinzel',serif;font-size:1.1rem;letter-spacing:0.15em;color:#d4a843;text-transform:uppercase;margin-bottom:20px;text-align:center}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<div class="wrap">
+  <div class="header">
+    <div class="badge">— Your Access —</div>
+    <h1>Product Library</h1>
+    <p class="welcome-text">Everything you purchased is now available. Choose a format and start learning immediately.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <h2>Your Products</h2>
+  <div class="products-grid">
+    <!-- Product 1: Standard Blueprint -->
+    <div class="product-card">
+      <div class="product-icon">📖</div>
+      <div class="product-title">AI Agency Blueprint</div>
+      <div class="product-desc">The complete text-based system. Structured lessons, scripts, pricing tables, and action steps. Perfect for note-taking and reference.</div>
+      <a href="blueprint.html" class="product-btn">Open Blueprint</a>
+    </div>
+
+    <!-- Product 2: 3D Interactive -->
+    <div class="product-card">
+      <div class="product-icon">✨</div>
+      <div class="product-title">Interactive Experience</div>
+      <div class="product-desc">The immersive 3D version. Elegant page-turning experience with interactive elements. Includes all content in a premium format.</div>
+      <a href="ai-agency-blueprint-3d.html" class="product-btn">Open 3D Version</a>
+    </div>
+
+    <!-- Product 3: AI Assistant -->
+    <div class="product-card">
+      <div class="product-icon">🤖</div>
+      <div class="product-title">Sovereign Assistant</div>
+      <div class="product-desc">AI-powered study guide. Ask questions about any module, get personalized advice, refine cold call scripts, and master the material faster.</div>
+      <a href="assistant.html" class="product-btn">Open Assistant</a>
+    </div>
+
+    <!-- Product 4: Admin -->
+    <div class="product-card">
+      <div class="product-icon">⚙️</div>
+      <div class="product-title">Admin Portal</div>
+      <div class="product-desc">Manage your purchases, view access codes, export data, and track your downloads. Owner only.</div>
+      <a href="admin.html" class="product-btn">Admin Panel</a>
+    </div>
+  </div>
+
+  <div class="access-info">
+    <div class="access-info-text">Your access code (saved for lifetime access):</div>
+    <div class="access-code" id="accessCode">Loading...</div>
+  </div>
+
+  <div class="footer-nav">
+    <a href="blueprint.html" class="nav-link">← Back to Blueprint</a>
+    <a href="admin.html" class="nav-link">Admin →</a>
+  </div>
+</div>
+
+<div class="scroll-to-top" id="scrollToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</div>
+
+<script>
+// Check access
+if(!localStorage.getItem('blueprint-access-code')){
+  window.location.href='index.html';
+}
+
+// Display access code
+document.getElementById('accessCode').textContent = localStorage.getItem('blueprint-access-code');
+
+// Scroll to top button
+window.addEventListener('scroll', function() {
+  const scrollBtn = document.getElementById('scrollToTop');
+  if(window.scrollY > 300) {
+    scrollBtn.classList.add('visible');
+  } else {
+    scrollBtn.classList.remove('visible');
+  }
+});
+</script>
+
+<script>
+const c=document.getElementById('stars'),ctx=c.getContext('2d');
+let W,H,stars=[];
+function init(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;stars=[];for(let i=0;i<220;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.2+0.2,o:Math.random()*0.5+0.1,s:Math.random()*0.0003+0.0001})}
+function draw(){ctx.clearRect(0,0,W,H);stars.forEach(s=>{s.o+=s.s;if(s.o>0.7||s.o<0.1)s.s*=-1;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(212,168,67,${s.o})`;ctx.fill()});requestAnimationFrame(draw)}
+window.addEventListener('resize',init);init();draw();
+</script>
+</body>
+</html>

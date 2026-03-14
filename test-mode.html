@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test Mode — CAELUM</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#080a0f;color:#c9b97a;font-family:'EB Garamond',serif;min-height:100vh;overflow-x:hidden}
+  canvas#stars{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+  .wrap{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:60px 24px 100px}
+
+  .header{text-align:center;margin-bottom:40px}
+  .badge{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.3em;color:#6b5a2a;text-transform:uppercase;margin-bottom:16px}
+  h1{font-family:'Cinzel Decorative',serif;font-size:2.5rem;color:#d4a843;margin-bottom:16px}
+  .subtitle{font-size:1.1rem;color:#8a7a5a;line-height:1.8}
+
+  .divider{width:80px;height:1px;background:linear-gradient(90deg,transparent,#d4a843,transparent);margin:30px auto}
+
+  .button-group{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:40px 0}
+  .btn{font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.15em;padding:20px 30px;border:1px solid #d4a843;background:transparent;color:#d4a843;cursor:pointer;transition:all 0.3s;text-transform:uppercase;border-radius:4px}
+  .btn:hover{background:#d4a843;color:#080a0f;transform:translateY(-2px)}
+  .btn.danger{border-color:#c9704c;color:#c9704c}
+  .btn.danger:hover{background:#c9704c;color:#080a0f}
+
+  .info-box{border:1px solid #1e1a10;background:rgba(212,168,67,0.03);padding:24px;margin:30px 0;border-radius:4px}
+  .info-title{font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.1em;color:#d4a843;margin-bottom:12px;text-transform:uppercase}
+  .info-text{font-size:0.95rem;color:#7a6e58;line-height:1.8}
+  .info-text strong{color:#c9b97a}
+
+  .status{padding:12px 16px;background:rgba(212,168,67,0.1);border-left:3px solid #d4a843;margin-top:16px;font-size:0.9rem;color:#8a7a5a;border-radius:2px}
+  .status.success{border-left-color:#4caf50;background:rgba(76,175,80,0.1);color:#81c784}
+  .status.error{border-left-color:#f44336;background:rgba(244,67,54,0.1);color:#ef5350}
+
+  .back-link{display:inline-block;font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.2em;color:#4a3e20;text-decoration:none;text-transform:uppercase;margin-bottom:40px;transition:color 0.3s}
+  .back-link:hover{color:#d4a843}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<div class="wrap">
+  <a href="index.html" class="back-link">← Back to Main</a>
+
+  <div class="header">
+    <div class="badge">— Developer Tools —</div>
+    <h1>Test Mode</h1>
+    <p class="subtitle">Simulate purchases and test the full product experience without payment.</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="button-group">
+    <button class="btn" onclick="grantAccess()">✓ Simulate Purchase</button>
+    <button class="btn danger" onclick="revokeAccess()">✗ Revoke Access</button>
+  </div>
+
+  <div class="info-box">
+    <div class="info-title">What This Does</div>
+    <div class="info-text">
+      <p style="margin-bottom:12px"><strong>Simulate Purchase:</strong> Generates a fake access code and stores it in your browser. You'll be able to access all protected pages (blueprint.html, 3D version, dashboard) as if you paid.</p>
+      <p><strong>Revoke Access:</strong> Clears the access code. You'll be redirected to the paywall.</p>
+    </div>
+  </div>
+
+  <div id="status" class="info-box" style="display:none;">
+    <div id="statusMessage"></div>
+  </div>
+
+  <div class="info-box">
+    <div class="info-title">Current Status</div>
+    <div class="info-text">
+      <p><strong>Access Code:</strong> <span id="currentCode" style="font-family:monospace;color:#d4a843">None</span></p>
+      <p style="margin-top:12px"><strong>Status:</strong> <span id="currentStatus" style="color:#f44336">Not Purchased</span></p>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <div class="info-title">Quick Links</div>
+    <div class="info-text">
+      <p><a href="dashboard.html" style="color:#d4a843;text-decoration:none">→ Product Dashboard</a></p>
+      <p style="margin-top:8px"><a href="blueprint.html" style="color:#d4a843;text-decoration:none">→ Blueprint (Text)</a></p>
+      <p style="margin-top:8px"><a href="ai-agency-blueprint-3d.html" style="color:#d4a843;text-decoration:none">→ 3D Interactive</a></p>
+    </div>
+  </div>
+</div>
+
+<script>
+function updateStatus(){
+  const code = localStorage.getItem('blueprint-access-code');
+  const codeDisplay = document.getElementById('currentCode');
+  const statusDisplay = document.getElementById('currentStatus');
+
+  if(code){
+    codeDisplay.textContent = code;
+    statusDisplay.textContent = 'Purchased ✓';
+    statusDisplay.style.color = '#4caf50';
+  } else {
+    codeDisplay.textContent = 'None';
+    statusDisplay.textContent = 'Not Purchased';
+    statusDisplay.style.color = '#f44336';
+  }
+}
+
+function grantAccess(){
+  const code = 'TEST-' + Date.now() + '-' + Math.random().toString(36).substr(2,9);
+  localStorage.setItem('blueprint-access-code', code);
+
+  const purchase = {
+    accessCode: code,
+    timestamp: new Date().toISOString(),
+    paypalOrderId: 'TEST-MODE',
+    status: 'test'
+  };
+
+  let purchases = JSON.parse(localStorage.getItem('blueprint-purchases') || '[]');
+  purchases.push(purchase);
+  localStorage.setItem('blueprint-purchases', JSON.stringify(purchases));
+
+  showStatus('✓ Access granted! You can now view all products.', 'success');
+  updateStatus();
+}
+
+function revokeAccess(){
+  localStorage.removeItem('blueprint-access-code');
+  showStatus('✗ Access revoked. You will be redirected to paywall.', 'error');
+  updateStatus();
+  setTimeout(() => window.location.href = 'index.html', 2000);
+}
+
+function showStatus(message, type){
+  const statusEl = document.getElementById('status');
+  const msgEl = document.getElementById('statusMessage');
+  statusEl.className = 'info-box status ' + type;
+  msgEl.textContent = message;
+  statusEl.style.display = 'block';
+}
+
+updateStatus();
+</script>
+
+<script>
+const c=document.getElementById('stars'),ctx=c.getContext('2d');
+let W,H,stars=[];
+function init(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;stars=[];for(let i=0;i<220;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.2+0.2,o:Math.random()*0.5+0.1,s:Math.random()*0.0003+0.0001})}
+function draw(){ctx.clearRect(0,0,W,H);stars.forEach(s=>{s.o+=s.s;if(s.o>0.7||s.o<0.1)s.s*=-1;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(212,168,67,${s.o})`;ctx.fill()});requestAnimationFrame(draw)}
+window.addEventListener('resize',init);init();draw();
+</script>
+</body>
+</html>

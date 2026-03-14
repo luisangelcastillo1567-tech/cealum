@@ -1,0 +1,28 @@
+{
+  "name": "caelum-sovereign-assistant",
+  "version": "1.0.0",
+  "description": "AI-powered assistant for the CAELUM AI Agency Blueprint",
+  "main": "backend-api.js",
+  "scripts": {
+    "start": "node backend-api.js",
+    "dev": "nodemon backend-api.js"
+  },
+  "keywords": [
+    "ai",
+    "assistant",
+    "blueprint",
+    "agency",
+    "claude"
+  ],
+  "author": "CAELUM",
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.16.0",
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}

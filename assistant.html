@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sovereign Assistant — CAELUM</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link href="smooth-scroll.css" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;background:#080a0f;color:#c9b97a;font-family:'EB Garamond',serif;overflow:hidden}
+
+  .container{display:flex;height:100vh;position:relative}
+  canvas#stars{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+
+  .sidebar{width:250px;background:rgba(8,10,15,0.95);border-right:1px solid #1e1a10;display:flex;flex-direction:column;padding:24px;z-index:2;overflow-y:auto}
+  .sidebar-header{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.2em;color:#6b5a2a;text-transform:uppercase;margin-bottom:16px}
+  .topic-btn{background:transparent;border:1px solid #1e1a10;padding:12px;margin:8px 0;font-family:'EB Garamond',serif;color:#8a7a5a;cursor:pointer;text-align:left;border-radius:4px;transition:all 0.3s;font-size:0.9rem}
+  .topic-btn:hover{border-color:#d4a843;color:#d4a843}
+  .topic-btn.active{background:#d4a843;color:#080a0f;border-color:#d4a843}
+
+  .main{flex:1;display:flex;flex-direction:column;position:relative}
+
+  .header{padding:24px 40px;border-bottom:1px solid #1e1a10;z-index:1}
+  .header-title{font-family:'Cinzel Decorative',serif;font-size:1.8rem;color:#d4a843;margin-bottom:8px}
+  .header-subtitle{font-size:0.95rem;color:#8a7a5a}
+
+  .chat-area{flex:1;overflow-y:auto;padding:40px;display:flex;flex-direction:column;gap:20px}
+
+  .message{display:flex;gap:12px;margin-bottom:20px}
+  .message.user{justify-content:flex-end}
+  .message.assistant{justify-content:flex-start}
+
+  .bubble{max-width:70%;padding:16px 20px;border-radius:4px;line-height:1.6;font-size:0.95rem}
+  .user .bubble{background:#d4a843;color:#080a0f;border:1px solid #d4a843}
+  .assistant .bubble{background:rgba(212,168,67,0.05);color:#7a6e58;border:1px solid #1e1a10}
+
+  .input-area{padding:24px 40px;border-top:1px solid #1e1a10;display:flex;gap:12px;z-index:1}
+  .input-field{flex:1;background:rgba(212,168,67,0.05);border:1px solid #1e1a10;padding:12px 16px;color:#c9b97a;font-family:'EB Garamond',serif;border-radius:4px;font-size:0.95rem}
+  .input-field::placeholder{color:#6b5a2a}
+  .input-field:focus{outline:none;border-color:#d4a843}
+
+  .send-btn{padding:12px 24px;background:#d4a843;color:#080a0f;border:none;border-radius:4px;font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.1em;cursor:pointer;text-transform:uppercase;transition:all 0.3s}
+  .send-btn:hover{background:#e8c97a}
+  .send-btn:disabled{opacity:0.5;cursor:not-allowed}
+
+  .back-link{position:fixed;top:24px;right:24px;font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.15em;color:#4a3e20;text-decoration:none;text-transform:uppercase;z-index:10;transition:color 0.3s}
+  .back-link:hover{color:#d4a843}
+
+  .loading{display:none;padding:16px;background:rgba(212,168,67,0.05);border-radius:4px;color:#8a7a5a;font-size:0.9rem}
+  .loading.active{display:block;animation:pulse 1.5s infinite}
+
+  @keyframes pulse{0%,100%{opacity:0.5}50%{opacity:1}}
+
+  ::-webkit-scrollbar{width:8px}
+  ::-webkit-scrollbar-track{background:transparent}
+  ::-webkit-scrollbar-thumb{background:#6b5a2a;border-radius:4px}
+  ::-webkit-scrollbar-thumb:hover{background:#d4a843}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<a href="dashboard.html" class="back-link">← Dashboard</a>
+
+<div class="container">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">Quick Topics</div>
+    <button class="topic-btn active" onclick="selectTopic('general')">General Questions</button>
+    <button class="topic-btn" onclick="selectTopic('module1')">Module 1: Foundation</button>
+    <button class="topic-btn" onclick="selectTopic('module2')">Module 2: Finding Clients</button>
+    <button class="topic-btn" onclick="selectTopic('module3')">Module 3: Tools</button>
+    <button class="topic-btn" onclick="selectTopic('module4')">Module 4: Getting Paid</button>
+    <button class="topic-btn" onclick="selectTopic('coldcall')">Cold Calling Tips</button>
+    <button class="topic-btn" onclick="selectTopic('pricing')">Pricing Strategy</button>
+  </div>
+
+  <!-- Main Chat -->
+  <div class="main">
+    <div class="header">
+      <div class="header-title">Sovereign Assistant</div>
+      <div class="header-subtitle">Your AI guide through the blueprint. Ask anything — I have all the answers.</div>
+    </div>
+
+    <div class="chat-area" id="chatArea">
+      <div class="message assistant">
+        <div class="bubble">Welcome, sovereign. I'm here to help you master this blueprint. Ask me about any module, pricing strategy, cold calling scripts, tool recommendations, or how to structure your agency. What would you like to know?</div>
+      </div>
+    </div>
+
+    <div id="loading" class="loading">Thinking...</div>
+
+    <div class="input-area">
+      <input type="text" class="input-field" id="userInput" placeholder="Ask me anything about the blueprint..." onkeypress="if(event.key==='Enter') sendMessage()">
+      <button class="send-btn" onclick="sendMessage()" id="sendBtn">Send</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Check access
+if(!localStorage.getItem('blueprint-access-code')){
+  window.location.href='index.html';
+}
+
+let currentTopic = 'general';
+
+function selectTopic(topic){
+  currentTopic = topic;
+  document.querySelectorAll('.topic-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+
+  const topicMessages = {
+    general: "What would you like to know about the AI Agency Blueprint?",
+    module1: "Ask me about the foundation of AI agencies, market opportunity, and why now is the perfect time.",
+    module2: "Questions about finding clients? Ask about Google Maps prospecting, cold calling scripts, or outreach.",
+    module3: "Want to know about the 17 tools? I can explain each one and how to use them.",
+    module4: "Ask about pricing, payment terms, contracts, or how to set up recurring revenue.",
+    coldcall: "Need help with cold calling? I can refine scripts, handle objections, or coach you.",
+    pricing: "Let's discuss your pricing strategy, packages, and how to structure your services."
+  };
+
+  addMessage('assistant', topicMessages[topic]);
+}
+
+function addMessage(role, text){
+  const chatArea = document.getElementById('chatArea');
+  const messageDiv = document.createElement('div');
+  messageDiv.className = `message ${role}`;
+  messageDiv.innerHTML = `<div class="bubble">${text}</div>`;
+  chatArea.appendChild(messageDiv);
+  chatArea.scrollTop = chatArea.scrollHeight;
+}
+
+function sendMessage(){
+  const input = document.getElementById('userInput');
+  const text = input.value.trim();
+
+  if(!text) return;
+
+  addMessage('user', text);
+  input.value = '';
+
+  showLoading(true);
+
+  // Simulate AI response (replace with actual Claude API call)
+  setTimeout(() => {
+    const responses = [
+      "That's a great question. Based on the blueprint, here's what you need to know...",
+      "Excellent point. Let me break this down for you step by step...",
+      "This is one of the most important concepts in the blueprint. Here's why...",
+      "You're thinking like a sovereign. Here's the strategic approach..."
+    ];
+
+    const response = responses[Math.floor(Math.random() * responses.length)];
+    addMessage('assistant', response);
+    showLoading(false);
+  }, 1000);
+}
+
+function showLoading(show){
+  document.getElementById('loading').classList.toggle('active', show);
+}
+
+// Focus input on load
+document.getElementById('userInput').focus();
+</script>
+
+<script>
+const c=document.getElementById('stars'),ctx=c.getContext('2d');
+let W,H,stars=[];
+function init(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;stars=[];for(let i=0;i<220;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.2+0.2,o:Math.random()*0.5+0.1,s:Math.random()*0.0003+0.0001})}
+function draw(){ctx.clearRect(0,0,W,H);stars.forEach(s=>{s.o+=s.s;if(s.o>0.7||s.o<0.1)s.s*=-1;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(212,168,67,${s.o})`;ctx.fill()});requestAnimationFrame(draw)}
+window.addEventListener('resize',init);init();draw();
+</script>
+</body>
+</html>

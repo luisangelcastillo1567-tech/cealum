@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Agency Blueprint — CAELUM</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#080a0f;color:#c9b97a;font-family:'EB Garamond',serif;min-height:100vh;overflow-x:hidden}
+  canvas#stars{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+  .wrap{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:60px 24px 100px}
+  .badge{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.3em;color:#6b5a2a;text-transform:uppercase;margin-bottom:24px}
+  h1{font-family:'Cinzel Decorative',serif;font-size:clamp(2rem,5vw,3.2rem);color:#d4a843;line-height:1.15;margin-bottom:16px;text-shadow:0 0 40px rgba(212,168,67,0.15)}
+  .tagline{font-size:1.2rem;color:#8a7a5a;font-style:italic;margin-bottom:48px;line-height:1.6}
+  .divider{width:80px;height:1px;background:linear-gradient(90deg,transparent,#d4a843,transparent);margin:40px 0}
+  h2{font-family:'Cinzel',serif;font-size:1.1rem;letter-spacing:0.15em;color:#d4a843;text-transform:uppercase;margin-bottom:20px}
+  .module{border:1px solid #1e1a10;background:rgba(212,168,67,0.03);border-radius:4px;padding:28px 32px;margin-bottom:20px}
+  .module-num{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.3em;color:#6b5a2a;margin-bottom:8px}
+  .module-title{font-family:'Cinzel',serif;font-size:1rem;color:#c9b97a;margin-bottom:12px}
+  .module p{font-size:1rem;color:#7a6e58;line-height:1.8;margin-bottom:12px}
+  .module p:last-child{margin-bottom:0}
+  .lesson{padding:10px 0;border-bottom:1px solid #1a1508;font-size:0.95rem;color:#8a7a5a;display:flex;gap:12px}
+  .lesson:last-child{border-bottom:none}
+  .lesson-num{color:#4a3e20;font-family:'Cinzel',serif;font-size:11px;min-width:28px}
+  .tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-top:16px}
+  .tool-card{border:1px solid #1e1a10;background:rgba(212,168,67,0.02);border-radius:4px;padding:16px}
+  .tool-name{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.1em;color:#c9b97a;margin-bottom:4px}
+  .tool-use{font-size:0.85rem;color:#5a5040;line-height:1.5}
+  .script-block{background:#06080d;border-left:2px solid #d4a843;padding:20px 24px;margin:12px 0;border-radius:0 4px 4px 0}
+  .script-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;color:#6b5a2a;margin-bottom:10px}
+  .script-block p{font-size:0.95rem;color:#8a7a5a;line-height:1.8;font-style:italic}
+  .price-table{width:100%;border-collapse:collapse;margin-top:16px}
+  .price-table th{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.15em;color:#6b5a2a;text-align:left;padding:10px 0;border-bottom:1px solid #1e1a10}
+  .price-table td{padding:12px 0;border-bottom:1px solid #0e0c08;font-size:0.95rem;color:#7a6e58;vertical-align:top}
+  .price-table td:first-child{color:#c9b97a;font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.05em;width:35%}
+  .gold{color:#d4a843}
+  .back-link{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.2em;color:#4a3e20;text-decoration:none;display:inline-block;margin-bottom:48px;text-transform:uppercase}
+  .back-link:hover{color:#d4a843}
+  .seal{text-align:center;padding:48px 0 0;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.3em;color:#2a2418;text-transform:uppercase}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<div class="wrap">
+  <a class="back-link" href="index.html">← Return to CAELUM</a>
+  <div class="badge">— Sovereign Program · $27 —</div>
+  <h1>AI Agency Blueprint</h1>
+  <p class="tagline">The complete system to launch a profitable AI agency in 30 days.<br>No code. No experience. No excuses.</p>
+  <div class="divider"></div>
+  <h2>What You Now Possess</h2>
+  <p style="color:#7a6e58;line-height:1.8;margin-bottom:32px">This is not a motivational document. This is an operational system — built for the person who is done waiting and ready to move. Work through each module in order. Everything you need is here.</p>
+  <!-- MODULE 1 -->
+  <div class="module">
+    <div class="module-num">MODULE 01 OF 04</div>
+    <div class="module-title">The Foundation — Understanding AI Agency Work</div>
+    <p>An AI agency sells AI-powered services to businesses that have problems they don't know how to solve with technology. You are the bridge. You don't need to build AI — you need to know which tools solve which problems, and how to package that as a service.</p>
+    <p>The most in-demand AI services right now are: automated customer follow-up, content creation pipelines, chatbot installation, lead generation automation, and social media scheduling. Any small business can benefit from these. Most don't have them yet.</p>
+    <div class="divider" style="width:40px;margin:20px 0"></div>
+    <h2 style="font-size:0.9rem;margin-bottom:12px">Lessons</h2>
+    <div class="lesson"><span class="lesson-num">1.1</span><span>What an AI agency actually is — and why it's the best business to start in 2025 with no money and no degree</span></div>
+    <div class="lesson"><span class="lesson-num">1.2</span><span>The 5 most profitable AI services you can sell starting this week (with zero technical skills)</span></div>
+    <div class="lesson"><span class="lesson-num">1.3</span><span>Who your ideal client is — small businesses with $10k–$500k/year revenue, no tech team, and real problems</span></div>
+    <div class="lesson"><span class="lesson-num">1.4</span><span>How to position yourself as an expert even if you started learning AI yesterday — the credibility framework</span></div>
+  </div>
+  <!-- MODULE 2 -->
+  <div class="module">
+    <div class="module-num">MODULE 02 OF 04</div>
+    <div class="module-title">Finding Clients — The Google Maps Method</div>
+    <p>You do not need a following. You do not need ads. You need a phone and Google Maps. Local businesses — restaurants, salons, contractors, real estate agents, gyms, law offices — are actively losing money every day because they lack basic digital systems. You are going to fix that for them.</p>
+    <div class="divider" style="width:40px;margin:20px 0"></div>
+    <h2 style="font-size:0.9rem;margin-bottom:12px">The Prospecting Process</h2>
+    <div class="lesson"><span class="lesson-num">2.1</span><span>Open Google Maps. Search any business type in your city (e.g. "plumbers Las Vegas"). Filter to businesses with under 50 reviews. These are small operations — exactly your target.</span></div>
+    <div class="lesson"><span class="lesson-num">2.2</span><span>Check each business: do they have a website? Is it mobile-friendly? Do they have a Google Business profile? Missing any of these = your opening.</span></div>
+    <div class="lesson"><span class="lesson-num">2.3</span><span>Write down: business name, phone number, what's missing. Build a list of 20 per day. That's your pipeline.</span></div>
+    <div class="lesson"><span class="lesson-num">2.4</span><span>Call them. Use the script below. Your goal on the first call is not to sell — it's to schedule a 15-minute discovery call.</span></div>
+    <div class="divider" style="width:40px;margin:20px 0"></div>
+    <h2 style="font-size:0.9rem;margin-bottom:16px">Cold Call Script — First Contact</h2>
+    <div class="script-block">
+      <div class="script-label">Word for word — memorize this</div>
+      <p>"Hi, is this [Owner Name]? My name is [Your Name] — I'm a digital consultant based here in [City]. I was doing some research on local [business type] businesses and I noticed your [website is outdated / you don't have a website / your Google listing is incomplete]. I help businesses like yours fix that really quickly — usually within a week. I'm not trying to sell you anything on this call, I just wanted to see if it'd be worth a 15-minute conversation. Are you free sometime this week?"</p>
+    </div>
+    <div class="script-block">
+      <div class="script-label">If they ask "how much does it cost?"</div>
+      <p>"It really depends on what you need — that's exactly why I'd love the 15 minutes. Some clients pay $300, some pay $1,500. But I won't know until I understand your situation. Can we just get 15 minutes on the calendar first?"</p>
+    </div>
+    <div class="script-block">
+      <div class="script-label">If they say "I'm not interested"</div>
+      <p>"Totally understand. Can I ask — do you currently have a way to follow up with customers automatically after they visit? No pressure, I'm just curious." (This often opens the door to a real conversation.)</p>
+    </div>
+  </div>
+  <!-- MODULE 3 -->
+  <div class="module">
+    <div class="module-num">MODULE 03 OF 04</div>
+    <div class="module-title">Delivering the Work — The 17 No-Code AI Tools</div>
+    <p>You don't build anything from scratch. You use tools that already exist, configure them for your client's business, and charge for your time and expertise. These are the 17 tools that cover 95% of what any AI agency will ever need to deliver.</p>
+    <div class="divider" style="width:40px;margin:20px 0"></div>
+    <div class="tools-grid">
+      <div class="tool-card"><div class="tool-name">ChatGPT / Claude</div><div class="tool-use">Content creation, email drafting, customer Q&A scripts</div></div>
+      <div class="tool-card"><div class="tool-name">Zapier</div><div class="tool-use">Automate workflows between apps — no code required</div></div>
+      <div class="tool-card"><div class="tool-name">Make.com</div><div class="tool-use">Advanced automation, more flexible than Zapier</div></div>
+      <div class="tool-card"><div class="tool-name">Manychat</div><div class="tool-use">Instagram + Facebook DM automation and lead capture</div></div>
+      <div class="tool-card"><div class="tool-name">Tidio</div><div class="tool-use">AI chatbot for any website — installs in 5 minutes</div></div>
+      <div class="tool-card"><div class="tool-name">GHL (GoHighLevel)</div><div class="tool-use">All-in-one CRM, funnels, and follow-up automation</div></div>
+      <div class="tool-card"><div class="tool-name">Notion AI</div><div class="tool-use">Client documentation, SOPs, and knowledge bases</div></div>
+      <div class="tool-card"><div class="tool-name">Canva AI</div><div class="tool-use">Social media content, thumbnails, marketing materials</div></div>
+      <div class="tool-card"><div class="tool-name">ElevenLabs</div><div class="tool-use">AI voiceovers for client video content</div></div>
+      <div class="tool-card"><div class="tool-name">HeyGen</div><div class="tool-use">AI video avatars for client marketing</div></div>
+      <div class="tool-card"><div class="tool-name">Typeform + AI</div><div class="tool-use">Smart intake forms and client onboarding flows</div></div>
+      <div class="tool-card"><div class="tool-name">Calendly</div><div class="tool-use">Automated booking — eliminate phone tag forever</div></div>
+      <div class="tool-card"><div class="tool-name">Buffer / Later</div><div class="tool-use">Schedule a month of social posts in one sitting</div></div>
+      <div class="tool-card"><div class="tool-name">Loom AI</div><div class="tool-use">Record client tutorials and walkthroughs fast</div></div>
+      <div class="tool-card"><div class="tool-name">Airtable AI</div><div class="tool-use">Client databases, project tracking, reporting</div></div>
+      <div class="tool-card"><div class="tool-name">Synthesia</div><div class="tool-use">Training videos and explainers without a camera</div></div>
+      <div class="tool-card"><div class="tool-name">Webflow / Carrd</div><div class="tool-use">Build fast, beautiful websites for local clients</div></div>
+    </div>
+    <div class="divider" style="width:40px;margin:20px 0"></div>
+    <h2 style="font-size:0.9rem;margin-bottom:12px">How to Package Services</h2>
+    <div class="lesson"><span class="lesson-num">3.1</span><span>Starter Package ($300–$500): Google Business Profile setup + basic website + 1 month social content</span></div>
+    <div class="lesson"><span class="lesson-num">3.2</span><span>Growth Package ($800–$1,200): Everything above + chatbot installation + automated follow-up sequence</span></div>
+    <div class="lesson"><span class="lesson-num">3.3</span><span>Sovereign Package ($1,500–$2,500): Full AI systems build — CRM, automations, content pipeline, monthly retainer option</span></div>
+  </div>
+  <!-- MODULE 4 -->
+  <div class="module">
+    <div class="module-num">MODULE 04 OF 04</div>
+    <div class="module-title">Getting Paid — Pricing, Contracts & Recurring Revenue</div>
+    <p>The goal is not one-time payments. The goal is recurring revenue — clients who pay you every month on autopilot. This is how you build something real.</p>
+    <div class="divider" style="width:40px;margin:20px 0"></div>
+    <h2 style="font-size:0.9rem;margin-bottom:12px">What to Charge</h2>
+    <table class="price-table">
+      <thead><tr><th>Service</th><th>One-Time</th><th>Monthly Retainer</th></tr></thead>
+      <tbody>
+        <tr><td>Website build</td><td class="gold">$400–$1,500</td><td>$100–$200/mo (hosting + updates)</td></tr>
+        <tr><td>Chatbot setup</td><td class="gold">$300–$800</td><td>$150–$300/mo (maintenance)</td></tr>
+        <tr><td>Social content</td><td class="gold">$200–$500 setup</td><td>$300–$800/mo (ongoing posts)</td></tr>
+        <tr><td>Automation build</td><td class="gold">$500–$1,500</td><td>$200–$400/mo (monitoring)</td></tr>
+        <tr><td>Full AI system</td><td class="gold">$1,500–$3,000</td><td>$500–$1,500/mo</td></tr>
+      </tbody>
+    </table>
+    <div class="divider" style="width:40px;margin:20px 0"></div>
+    <h2 style="font-size:0.9rem;margin-bottom:12px">Protecting Yourself</h2>
+    <div class="lesson"><span class="lesson-num">4.1</span><span>Always collect 50% deposit before starting any work. Non-negotiable. Use PayPal Invoices or Stripe.</span></div>
+    <div class="lesson"><span class="lesson-num">4.2</span><span>Use a simple 1-page contract. At minimum cover: scope of work, payment terms, revision limits (max 2 rounds), and ownership rights.</span></div>
+    <div class="lesson"><span class="lesson-num">4.3</span><span>For retainer clients, charge on the 1st of each month. Use recurring PayPal billing or Stripe subscriptions. Never chase payments manually.</span></div>
+    <div class="lesson"><span class="lesson-num">4.4</span><span>Your 30-day goal: 3 clients paying $300–$500 each = $900–$1,500. That's your proof of concept. Everything scales from there.</span></div>
+  </div>
+  <!-- BONUS -->
+  <div class="module" style="border-color:#2a2010">
+    <div class="module-num" style="color:#d4a843">— BONUS —</div>
+    <div class="module-title" style="color:#d4a843">The Sovereign Operator Mindset</div>
+    <p>Most people who buy courses like this do nothing with them. Not because the information is wrong — but because they treat information as a destination. It isn't. Information is a weapon. It only has value when you use it.</p>
+    <p>The sovereign operator does not wait until they feel ready. They are never ready. They act anyway. They call the business. They send the message. They build the thing. Imperfect action beats perfect inaction every single time.</p>
+    <p style="color:#d4a843;font-family:'Cinzel',serif;font-size:0.85rem;letter-spacing:0.1em;margin-top:20px">Your assignment: make one cold call today. Not tomorrow. Today.</p>
+  </div>
+  <div class="divider"></div>
+  <div class="seal">CAELUM · AI Agency Blueprint · Sovereign Edition</div>
+</div>
+<script>
+if(!localStorage.getItem('blueprint-access-code')){window.location.href='index.html'}
+</script>
+<script>
+const c=document.getElementById('stars'),ctx=c.getContext('2d');let W,H,stars=[];function init(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;stars=[];for(let i=0;i<220;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.2+0.2,o:Math.random()*0.5+0.1,s:Math.random()*0.0003+0.0001})}function draw(){ctx.clearRect(0,0,W,H);stars.forEach(s=>{s.o+=s.s;if(s.o>0.7||s.o<0.1)s.s*=-1;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(212,168,67,${s.o})`;ctx.fill()});requestAnimationFrame(draw)}window.addEventListener('resize',init);init();draw();
+</script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard — CAELUM</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#080a0f;color:#c9b97a;font-family:'EB Garamond',serif;min-height:100vh;overflow-x:hidden}
+  canvas#stars{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+  .wrap{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:60px 24px 100px}
+  h1{font-family:'Cinzel Decorative',serif;font-size:2.2rem;color:#d4a843;margin-bottom:12px;text-shadow:0 0 40px rgba(212,168,67,0.15)}
+  .back-link{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.2em;color:#4a3e20;text-decoration:none;display:inline-block;margin-bottom:40px}
+  .back-link:hover{color:#d4a843}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-bottom:40px}
+  .stat-box{border:1px solid #1e1a10;background:rgba(212,168,67,0.03);border-radius:4px;padding:20px}
+  .stat-label{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.15em;color:#6b5a2a;text-transform:uppercase;margin-bottom:8px}
+  .stat-value{font-size:2rem;color:#d4a843;font-family:'Cinzel',serif}
+  .stat-sub{font-size:0.9rem;color:#5a5040;margin-top:8px}
+  .controls{margin-bottom:30px}
+  button{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:#d4a843;background:#1a1508;border:1px solid #2a2010;padding:10px 20px;cursor:pointer;margin-right:10px;transition:all 0.3s}
+  button:hover{border-color:#d4a843;background:rgba(212,168,67,0.1)}
+  .table-wrapper{border:1px solid #1e1a10;background:rgba(212,168,67,0.02);border-radius:4px;overflow:hidden}
+  table{width:100%;border-collapse:collapse;font-size:0.95rem}
+  th{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.15em;color:#6b5a2a;text-align:left;padding:15px;background:rgba(212,168,67,0.05);border-bottom:1px solid #1e1a10;text-transform:uppercase}
+  td{padding:12px 15px;border-bottom:1px solid #0e0c08;color:#7a6e58}
+  td:first-child{font-family:'Courier New',monospace;font-size:0.85rem;color:#c9b97a}
+  tr:hover{background:rgba(212,168,67,0.02)}
+  .empty{text-align:center;padding:40px 20px;color:#5a5040;font-style:italic}
+  .delete-btn{font-size:0.85rem;background:rgba(212,168,67,0.1);border:1px solid #4a3e20;padding:6px 12px;cursor:pointer;color:#8a7a5a}
+  .delete-btn:hover{background:#1a0f00;color:#d4a843}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<div class="wrap">
+  <a class="back-link" href="index.html">← Back to Main</a>
+  <h1>Admin Dashboard</h1>
+
+  <div class="stats">
+    <div class="stat-box">
+      <div class="stat-label">Total Purchases</div>
+      <div class="stat-value" id="total-sales">0</div>
+      <div class="stat-sub">$27 each</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Total Revenue</div>
+      <div class="stat-value" id="total-revenue">$0</div>
+      <div class="stat-sub">Lifetime</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Last Sale</div>
+      <div class="stat-value" id="last-sale">—</div>
+      <div class="stat-sub" id="last-sale-time"></div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button onclick="exportCSV()">Export CSV</button>
+    <button onclick="clearAllData()" style="color:#8a4a4a">Clear All Data</button>
+  </div>
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Access Code</th>
+          <th>Purchase Date</th>
+          <th>PayPal Order ID</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="purchases-tbody">
+        <tr class="empty">
+          <td colspan="5">No purchases yet</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+const c=document.getElementById('stars'),ctx=c.getContext('2d');let W,H,stars=[];function init(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;stars=[];for(let i=0;i<220;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.2+0.2,o:Math.random()*0.5+0.1,s:Math.random()*0.0003+0.0001})}function draw(){ctx.clearRect(0,0,W,H);stars.forEach(s=>{s.o+=s.s;if(s.o>0.7||s.o<0.1)s.s*=-1;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(212,168,67,${s.o})`;ctx.fill()});requestAnimationFrame(draw)}window.addEventListener('resize',init);init();draw();
+
+function loadPurchases(){
+  const purchases=JSON.parse(localStorage.getItem('blueprint-purchases')||'[]');
+  const tbody=document.getElementById('purchases-tbody');
+
+  if(purchases.length===0){
+    tbody.innerHTML='<tr class="empty"><td colspan="5">No purchases yet</td></tr>';
+    document.getElementById('total-sales').textContent='0';
+    document.getElementById('total-revenue').textContent='$0';
+    document.getElementById('last-sale').textContent='—';
+    document.getElementById('last-sale-time').textContent='';
+    return;
+  }
+
+  tbody.innerHTML=purchases.map((p,i)=>{
+    const date=new Date(p.timestamp);
+    const formatted=date.toLocaleDateString()+' '+date.toLocaleTimeString();
+    return `<tr>
+      <td>${p.accessCode}</td>
+      <td>${formatted}</td>
+      <td>${p.paypalOrderId||'—'}</td>
+      <td><span style="color:#d4a843">●</span> ${p.status}</td>
+      <td><button class="delete-btn" onclick="deletePurchase(${i})">Delete</button></td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('total-sales').textContent=purchases.length;
+  document.getElementById('total-revenue').textContent='$'+(purchases.length*27);
+
+  const latest=purchases[purchases.length-1];
+  const lastDate=new Date(latest.timestamp);
+  document.getElementById('last-sale').textContent=lastDate.toLocaleDateString();
+  document.getElementById('last-sale-time').textContent=lastDate.toLocaleTimeString();
+}
+
+function deletePurchase(index){
+  if(!confirm('Delete this purchase? This cannot be undone.')){return}
+  let purchases=JSON.parse(localStorage.getItem('blueprint-purchases')||'[]');
+  purchases.splice(index,1);
+  localStorage.setItem('blueprint-purchases',JSON.stringify(purchases));
+  loadPurchases();
+}
+
+function exportCSV(){
+  const purchases=JSON.parse(localStorage.getItem('blueprint-purchases')||'[]');
+  if(purchases.length===0){alert('No purchases to export');return}
+
+  let csv='Access Code,Purchase Date,PayPal Order ID,Status\n';
+  purchases.forEach(p=>{
+    csv+=`"${p.accessCode}","${p.timestamp}","${p.paypalOrderId||''}","${p.status}"\n`;
+  });
+
+  const blob=new Blob([csv],{type:'text/csv'});
+  const url=window.URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download='purchases-'+new Date().toISOString().split('T')[0]+'.csv';
+  a.click();
+}
+
+function clearAllData(){
+  if(!confirm('Delete ALL purchase data? This cannot be undone.')){return}
+  if(!confirm('Are you absolutely sure? This will erase all sales records.')){return}
+  localStorage.removeItem('blueprint-purchases');
+  loadPurchases();
+}
+
+loadPurchases();
+setInterval(loadPurchases,2000);
+</script>
+</body>
+</html>
