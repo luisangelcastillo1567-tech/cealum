@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Welcome to CAELUM — You're In The Clan</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --void:#05040e;
+  --deep:#0a0818;
+  --surface:#0f0c1e;
+  --card:#13102a;
+  --card2:#1a1535;
+  --border:rgba(127,119,221,0.15);
+  --border2:rgba(127,119,221,0.3);
+  --purple:#534AB7;
+  --purple-light:#7F77DD;
+  --purple-pale:#AFA9EC;
+  --teal:#1D9E75;
+  --teal-light:#5DCAA5;
+  --coral:#D85A30;
+  --text:#f0eeff;
+  --muted:#9990cc;
+  --dim:#443d66;
+  --gold:#c9a84c;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--void);color:var(--text);overflow-x:hidden;line-height:1.6;min-height:100vh}
+
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--void)}
+::-webkit-scrollbar-thumb{background:var(--purple);border-radius:2px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.25rem 2.5rem;background:rgba(5,4,14,0.9);backdrop-filter:blur(20px);border-bottom:0.5px solid var(--border)}
+.nav-logo{font-size:1.1rem;font-weight:900;letter-spacing:0.15em;background:linear-gradient(135deg,#AFA9EC,#5DCAA5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none}
+.nav-badge{background:rgba(29,158,117,0.15);border:0.5px solid rgba(93,202,165,0.3);color:var(--teal-light);font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.35rem 0.9rem;border-radius:20px}
+
+/* WELCOME HERO */
+.welcome-hero{min-height:55vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:9rem 2rem 5rem;position:relative;overflow:hidden}
+.orb1{position:absolute;width:800px;height:800px;background:radial-gradient(circle,rgba(83,74,183,0.1) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.orb2{position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(29,158,117,0.08) 0%,transparent 70%);top:10%;right:5%;pointer-events:none}
+
+.confetti-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(29,158,117,0.12);border:0.5px solid rgba(93,202,165,0.4);color:var(--teal-light);font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:0.5rem 1.25rem;border-radius:24px;margin-bottom:2rem;animation:fadeIn 0.5s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+
+.welcome-title{font-size:clamp(2.5rem,7vw,5.5rem);font-weight:900;letter-spacing:-0.04em;line-height:0.95;margin-bottom:1.25rem;animation:fadeIn 0.6s ease 0.1s both}
+.welcome-title-top{display:block;background:linear-gradient(135deg,#f0eeff 0%,#AFA9EC 50%,#5DCAA5 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.welcome-sub{font-size:clamp(1rem,2.5vw,1.2rem);color:var(--muted);max-width:540px;line-height:1.75;margin:0 auto 2.5rem;animation:fadeIn 0.6s ease 0.2s both}
+.welcome-sub span{color:var(--teal-light);font-weight:500}
+
+/* STEP PROGRESS */
+.progress-bar{display:flex;align-items:center;gap:0;max-width:600px;margin:0 auto 2rem;animation:fadeIn 0.6s ease 0.3s both}
+.prog-step{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1}
+.prog-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700}
+.prog-dot.done{background:var(--teal);color:#fff}
+.prog-dot.active{background:var(--purple);color:#fff;box-shadow:0 0 0 4px rgba(83,74,183,0.2)}
+.prog-dot.pending{background:var(--card);border:0.5px solid var(--border2);color:var(--dim)}
+.prog-label{font-size:0.65rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.prog-label.active{color:var(--purple-pale)}
+.prog-line{height:1px;flex:1;background:var(--border);margin-bottom:20px}
+.prog-line.done{background:var(--teal)}
+
+/* SECTIONS */
+.section{padding:5rem 2rem;max-width:1100px;margin:0 auto}
+.section-label{font-size:0.7rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal-light);margin-bottom:0.75rem}
+.section-heading{font-size:clamp(1.8rem,4vw,2.75rem);font-weight:800;letter-spacing:-0.03em;line-height:1.1;margin-bottom:0.75rem}
+.section-sub{font-size:1rem;color:var(--muted);max-width:560px;line-height:1.75;margin-bottom:2.5rem}
+
+/* UNLOCK BOX */
+.unlock-box{background:var(--card);border:0.5px solid var(--border2);border-radius:20px;padding:2.5rem;margin-bottom:3rem;position:relative;overflow:hidden}
+.unlock-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--purple),var(--teal))}
+.unlock-title{font-size:1.25rem;font-weight:700;margin-bottom:0.5rem}
+.unlock-sub{font-size:0.9rem;color:var(--muted);margin-bottom:1.75rem}
+.unlock-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0.75rem}
+.unlock-item{display:flex;align-items:center;gap:10px;background:rgba(83,74,183,0.08);border:0.5px solid var(--border);border-radius:10px;padding:0.85rem 1rem}
+.unlock-icon{font-size:1.1rem;flex-shrink:0}
+.unlock-item span{font-size:0.85rem;font-weight:500;color:var(--text)}
+
+/* PRODUCT CARDS */
+.products-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-bottom:3rem}
+.product-card{background:var(--card);border:0.5px solid var(--border);border-radius:16px;padding:2rem;position:relative;overflow:hidden;transition:all 0.25s;display:flex;flex-direction:column}
+.product-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--purple),var(--teal));opacity:0;transition:opacity 0.25s}
+.product-card:hover{border-color:var(--border2);transform:translateY(-3px)}
+.product-card:hover::before{opacity:1}
+.product-num{font-size:0.65rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--purple-pale);margin-bottom:0.75rem}
+.product-card h3{font-size:1.15rem;font-weight:700;margin-bottom:0.5rem}
+.product-card p{font-size:0.85rem;color:var(--muted);line-height:1.65;margin-bottom:1.25rem;flex:1}
+.product-status{display:inline-flex;align-items:center;gap:5px;font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:4px 10px;border-radius:20px;margin-bottom:1rem}
+.status-live{background:rgba(29,158,117,0.12);color:var(--teal-light);border:0.5px solid rgba(93,202,165,0.3)}
+.status-soon{background:rgba(83,74,183,0.12);color:var(--purple-pale);border:0.5px solid var(--border2)}
+.status-dot{width:5px;height:5px;border-radius:50%;background:currentColor}
+.btn-product{display:inline-block;padding:0.65rem 1.25rem;border-radius:8px;font-size:0.8rem;font-weight:700;letter-spacing:0.04em;border:none;cursor:pointer;transition:all 0.2s;text-decoration:none;text-align:center}
+.btn-product-live{background:linear-gradient(135deg,var(--purple),var(--purple-light));color:#fff}
+.btn-product-live:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(83,74,183,0.35)}
+.btn-product-soon{background:transparent;color:var(--muted);border:0.5px solid var(--border2)}
+
+/* STEP ROADMAP */
+.roadmap{display:flex;flex-direction:column;gap:0;max-width:680px;margin-bottom:3rem}
+.roadmap-step{display:flex;gap:1.5rem;padding-bottom:2.5rem;position:relative}
+.roadmap-step:not(:last-child)::before{content:'';position:absolute;left:19px;top:46px;bottom:0;width:1px;background:linear-gradient(to bottom,var(--teal),transparent)}
+.step-circle{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.9rem;font-weight:700;flex-shrink:0}
+.step-circle.done{background:rgba(29,158,117,0.2);border:0.5px solid rgba(93,202,165,0.5);color:var(--teal-light)}
+.step-circle.active{background:rgba(83,74,183,0.2);border:0.5px solid var(--border2);color:var(--purple-pale)}
+.step-circle.todo{background:var(--card);border:0.5px solid var(--border);color:var(--dim)}
+.step-body h3{font-size:1rem;font-weight:600;margin-bottom:0.35rem}
+.step-body p{font-size:0.85rem;color:var(--muted);line-height:1.65}
+.step-action{margin-top:0.75rem}
+.step-action a{display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;font-weight:600;color:var(--purple-pale);text-decoration:none;border:0.5px solid var(--border2);padding:0.45rem 1rem;border-radius:6px;transition:all 0.2s}
+.step-action a:hover{background:rgba(83,74,183,0.12);border-color:var(--purple-light)}
+
+/* COMMUNITY */
+.community-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-bottom:3rem}
+.community-card{background:var(--card);border:0.5px solid var(--border);border-radius:14px;padding:1.75rem;text-align:center;transition:all 0.25s;text-decoration:none;display:flex;flex-direction:column;align-items:center}
+.community-card:hover{border-color:var(--border2);transform:translateY(-3px)}
+.community-icon{font-size:2rem;margin-bottom:1rem}
+.community-card h3{font-size:1rem;font-weight:700;margin-bottom:0.4rem;color:var(--text)}
+.community-card p{font-size:0.82rem;color:var(--muted);line-height:1.6;margin-bottom:1.25rem;flex:1}
+.community-link{font-size:0.78rem;font-weight:600;color:var(--teal-light);letter-spacing:0.06em}
+
+/* INCOME STREAMS */
+.streams-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:3rem}
+.stream-card{background:var(--card);border:0.5px solid var(--border);border-radius:12px;padding:1.5rem;transition:all 0.25s}
+.stream-card:hover{border-color:var(--border2)}
+.stream-icon{font-size:1.5rem;margin-bottom:0.75rem}
+.stream-card h4{font-size:0.9rem;font-weight:700;margin-bottom:0.35rem}
+.stream-card p{font-size:0.8rem;color:var(--muted);line-height:1.6}
+.stream-tag{display:inline-block;font-size:0.6rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:2px 8px;border-radius:10px;margin-top:0.75rem;background:rgba(83,74,183,0.12);color:var(--purple-pale);border:0.5px solid var(--border2)}
+.stream-tag.hot{background:rgba(216,90,48,0.12);color:#E8825A;border-color:rgba(216,90,48,0.3)}
+.stream-tag.new{background:rgba(29,158,117,0.12);color:var(--teal-light);border-color:rgba(93,202,165,0.3)}
+
+/* BLUEPRINT PREVIEW */
+.blueprint-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0.75rem;margin-bottom:2rem}
+.blueprint-module{background:var(--card);border:0.5px solid var(--border);border-radius:12px;padding:1.25rem;display:flex;gap:1rem;align-items:flex-start}
+.module-num{font-size:0.7rem;font-weight:700;letter-spacing:0.15em;color:var(--purple-pale);background:rgba(83,74,183,0.12);border:0.5px solid var(--border2);border-radius:6px;padding:4px 10px;flex-shrink:0;margin-top:2px}
+.module-body h4{font-size:0.9rem;font-weight:700;margin-bottom:0.3rem}
+.module-body p{font-size:0.8rem;color:var(--muted);line-height:1.55}
+
+/* BOTTOM CTA */
+.bottom-cta{background:var(--card);border:0.5px solid var(--border2);border-radius:20px;padding:3.5rem 2.5rem;text-align:center;position:relative;overflow:hidden;margin:0 2rem 4rem}
+.bottom-cta::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--purple),var(--teal),transparent)}
+.bottom-cta-max{max-width:900px;margin:0 auto}
+.bottom-cta h2{font-size:clamp(1.75rem,4vw,2.5rem);font-weight:900;letter-spacing:-0.03em;margin-bottom:0.75rem;background:linear-gradient(135deg,#f0eeff,#AFA9EC,#5DCAA5);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.bottom-cta p{font-size:1rem;color:var(--muted);max-width:480px;margin:0 auto 2rem;line-height:1.75}
+.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn-main{background:linear-gradient(135deg,var(--purple),#7F77DD);color:#fff;padding:0.9rem 2rem;border-radius:8px;font-size:0.95rem;font-weight:700;letter-spacing:0.04em;border:none;cursor:pointer;transition:all 0.25s;text-decoration:none;display:inline-block}
+.btn-main:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(83,74,183,0.35)}
+.btn-ghost{background:transparent;color:var(--text);padding:0.9rem 2rem;border-radius:8px;font-size:0.95rem;font-weight:500;border:0.5px solid var(--border2);cursor:pointer;transition:all 0.25s;text-decoration:none;display:inline-block}
+.btn-ghost:hover{border-color:var(--purple-light);background:rgba(83,74,183,0.08)}
+
+/* FOOTER */
+footer{border-top:0.5px solid var(--border);padding:2.5rem 2rem;text-align:center}
+.footer-logo{font-size:1rem;font-weight:900;letter-spacing:0.18em;background:linear-gradient(135deg,#AFA9EC,#5DCAA5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.5rem}
+footer p{font-size:0.75rem;color:var(--dim)}
+
+@media(max-width:768px){
+  nav{padding:1rem 1.25rem}
+  .section{padding:3.5rem 1.25rem}
+  .unlock-box{padding:1.75rem}
+  .bottom-cta{padding:2.5rem 1.5rem;margin:0 1.25rem 3rem}
+  .progress-bar{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">CAELUM</a>
+  <div class="nav-badge">✦ Clan Member</div>
+</nav>
+
+<!-- WELCOME HERO -->
+<section class="welcome-hero">
+  <div class="orb1"></div>
+  <div class="orb2"></div>
+  <div class="confetti-badge">🎉 You're officially in the clan</div>
+  <h1 class="welcome-title">
+    <span class="welcome-title-top">Welcome Home.</span>
+  </h1>
+  <p class="welcome-sub">You just made the move most people never make. <span>Your access is live.</span> Everything below is yours — no cost, no catch, no expiry.</p>
+  <div class="progress-bar">
+    <div class="prog-step">
+      <div class="prog-dot done">✓</div>
+      <div class="prog-label done">Joined</div>
+    </div>
+    <div class="prog-line done"></div>
+    <div class="prog-step">
+      <div class="prog-dot active">2</div>
+      <div class="prog-label active">Explore System</div>
+    </div>
+    <div class="prog-line"></div>
+    <div class="prog-step">
+      <div class="prog-dot pending">3</div>
+      <div class="prog-label">Pick Your Lane</div>
+    </div>
+    <div class="prog-line"></div>
+    <div class="prog-step">
+      <div class="prog-dot pending">4</div>
+      <div class="prog-label">First Income</div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S UNLOCKED -->
+<section class="section">
+  <div class="unlock-box">
+    <div class="unlock-title">🔓 Your Clan Access Is Active</div>
+    <div class="unlock-sub">Here's everything you now have — free, forever, no credit card ever required.</div>
+    <div class="unlock-grid">
+      <div class="unlock-item"><span class="unlock-icon">📘</span><span>The Blueprint (Full Course)</span></div>
+      <div class="unlock-item"><span class="unlock-icon">🤖</span><span>AI Sovereign Assistant</span></div>
+      <div class="unlock-item"><span class="unlock-icon">🗂️</span><span>Command Center Dashboard</span></div>
+      <div class="unlock-item"><span class="unlock-icon">🌀</span><span>3D Interactive Experience</span></div>
+      <div class="unlock-item"><span class="unlock-icon">👥</span><span>Full Clan Community</span></div>
+      <div class="unlock-item"><span class="unlock-icon">💰</span><span>Revenue Share Projects</span></div>
+      <div class="unlock-item"><span class="unlock-icon">📊</span><span>Trading & Crypto Strategies</span></div>
+      <div class="unlock-item"><span class="unlock-icon">🔄</span><span>Lifetime Updates</span></div>
+    </div>
+  </div>
+
+  <!-- PRODUCTS -->
+  <div class="section-label">Your Products</div>
+  <h2 class="section-heading">The Full System — All 4 Products</h2>
+  <p class="section-sub">This is what you get as a Caelum member. Everything you need to go from zero to your first income.</p>
+  <div class="products-grid">
+    <div class="product-card">
+      <div class="product-num">Product I</div>
+      <div class="product-status status-live"><span class="status-dot"></span> Live Now</div>
+      <h3>The Blueprint</h3>
+      <p>The complete 4-module playbook. How to land your first client, what to say on cold calls, which AI tools do the work, and how to price your services. Built for absolute beginners.</p>
+      <a href="#blueprint" class="btn-product btn-product-live">Start the Blueprint →</a>
+    </div>
+    <div class="product-card">
+      <div class="product-num">Product II</div>
+      <div class="product-status status-soon"><span class="status-dot"></span> Coming Soon</div>
+      <h3>3D Interactive Experience</h3>
+      <p>The Blueprint reimagined as an immersive 3D page-turner. Premium learning format that feels like the future of education. In development now.</p>
+      <a href="#" class="btn-product btn-product-soon">Notify Me When Live</a>
+    </div>
+    <div class="product-card">
+      <div class="product-num">Product III</div>
+      <div class="product-status status-soon"><span class="status-dot"></span> Coming Soon</div>
+      <h3>Sovereign Assistant</h3>
+      <p>Your personal AI tutor, trained on the entire Blueprint. Ask questions, get strategies, practice cold calls, get unstuck — available 24/7, knows your situation.</p>
+      <a href="#" class="btn-product btn-product-soon">Notify Me When Live</a>
+    </div>
+    <div class="product-card">
+      <div class="product-num">Product IV</div>
+      <div class="product-status status-soon"><span class="status-dot"></span> Coming Soon</div>
+      <h3>Command Center</h3>
+      <p>Your personal member dashboard. Track your progress through the system, access all resources in one place, and manage your agency launch from a single hub.</p>
+      <a href="#" class="btn-product btn-product-soon">Notify Me When Live</a>
+    </div>
+  </div>
+</section>
+
+<!-- BLUEPRINT CONTENT -->
+<section class="section" id="blueprint" style="padding-top:0">
+  <div class="section-label">Product I — The Blueprint</div>
+  <h2 class="section-heading">Your 4-Module Launch System</h2>
+  <p class="section-sub">Complete this in order. Each module builds on the last. Most people who finish Module 1 have their first client before they finish Module 4.</p>
+  <div class="blueprint-grid">
+    <div class="blueprint-module">
+      <div class="module-num">MOD 1</div>
+      <div class="module-body">
+        <h4>The Foundation</h4>
+        <p>Understanding AI agencies, why now is the moment, what clients actually want, and how to position yourself as the expert — even with zero experience.</p>
+      </div>
+    </div>
+    <div class="blueprint-module">
+      <div class="module-num">MOD 2</div>
+      <div class="module-body">
+        <h4>Client Acquisition</h4>
+        <p>The Google Maps method. Cold calling scripts word for word. Email outreach templates. How to find 100 leads in an hour. How to close in one call.</p>
+      </div>
+    </div>
+    <div class="blueprint-module">
+      <div class="module-num">MOD 3</div>
+      <div class="module-body">
+        <h4>The AI Stack</h4>
+        <p>17 no-code AI tools broken down. What each one does, when to use it, and how to deliver agency-level work in hours using tools that do the heavy lifting.</p>
+      </div>
+    </div>
+    <div class="blueprint-module">
+      <div class="module-num">MOD 4</div>
+      <div class="module-body">
+        <h4>Revenue & Scale</h4>
+        <p>Pricing models that create recurring revenue. How to go from your first client to a $3K/month agency. When to bring in other clan members and split the work.</p>
+      </div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:1.5rem">
+    <a href="#" class="btn-main" style="font-size:1rem;padding:1rem 2.5rem">Access Full Blueprint →</a>
+  </div>
+</section>
+
+<!-- INCOME STREAMS -->
+<section class="section" style="padding-top:0">
+  <div class="section-label">Clan Income Streams</div>
+  <h2 class="section-heading">Pick Your Lane.<br/>Multiple Ways to Earn.</h2>
+  <p class="section-sub">The clan runs multiple income streams at once. Pick the one that fits your life right now — you can always add more lanes later.</p>
+  <div class="streams-grid">
+    <div class="stream-card">
+      <div class="stream-icon">🤝</div>
+      <h4>AI Agency</h4>
+      <p>Sell AI automation services to local businesses. $500–$3,000/mo per client. No experience needed — the tools do the work.</p>
+      <div class="stream-tag hot">🔥 Best for Beginners</div>
+    </div>
+    <div class="stream-card">
+      <div class="stream-icon">📈</div>
+      <h4>Crypto & Forex Trading</h4>
+      <p>Learn how to trade with AI signal tools. Start small, manage risk, compound over time. Strategy docs shared in the clan.</p>
+      <div class="stream-tag">Active</div>
+    </div>
+    <div class="stream-card">
+      <div class="stream-icon">🛒</div>
+      <h4>Ecommerce</h4>
+      <p>Product research, winning supplier selection, and a store launch framework. Clan members collaborate on shared storefronts.</p>
+      <div class="stream-tag new">✦ Growing</div>
+    </div>
+    <div class="stream-card">
+      <div class="stream-icon">🎥</div>
+      <h4>Content & Audience</h4>
+      <p>Build a brand around what you're learning. Short-form content that attracts clients, followers, and collaboration opportunities.</p>
+      <div class="stream-tag">Active</div>
+    </div>
+    <div class="stream-card">
+      <div class="stream-icon">🔗</div>
+      <h4>Revenue Share Projects</h4>
+      <p>Contribute to clan projects and earn your cut. No upfront capital required — just your time, skills, and execution.</p>
+      <div class="stream-tag new">✦ New</div>
+    </div>
+  </div>
+</section>
+
+<!-- NEXT STEPS -->
+<section class="section" style="padding-top:0">
+  <div class="section-label">Your First 7 Days</div>
+  <h2 class="section-heading">Exactly What To Do Next</h2>
+  <p class="section-sub">No guessing. This is your plan for the first week. Follow this and you'll have your foundation built before most people decide to start.</p>
+  <div class="roadmap">
+    <div class="roadmap-step">
+      <div class="step-circle done">✓</div>
+      <div class="step-body">
+        <h3>Day 1 — You're here. You joined.</h3>
+        <p>The hardest part is done. You made the move. Now read through everything on this page so you know exactly what's available to you.</p>
+      </div>
+    </div>
+    <div class="roadmap-step">
+      <div class="step-circle active">2</div>
+      <div class="step-body">
+        <h3>Day 2 — Join the clan community</h3>
+        <p>Introduce yourself. Tell us where you're starting from. You'll immediately connect with other members at your same level.</p>
+        <div class="step-action"><a href="#community">Join the Community →</a></div>
+      </div>
+    </div>
+    <div class="roadmap-step">
+      <div class="step-circle todo">3</div>
+      <div class="step-body">
+        <h3>Day 3–4 — Complete Blueprint Module 1 & 2</h3>
+        <p>Read both modules back to back. Don't skip steps. By end of Day 4 you'll have a list of 20 local businesses to contact and your opening script ready.</p>
+        <div class="step-action"><a href="#blueprint">Start the Blueprint →</a></div>
+      </div>
+    </div>
+    <div class="roadmap-step">
+      <div class="step-circle todo">4</div>
+      <div class="step-body">
+        <h3>Day 5–6 — Make your first 10 cold calls</h3>
+        <p>Use the exact script from Module 2. Your first calls will be uncomfortable — do them anyway. Post your results in the community for feedback.</p>
+      </div>
+    </div>
+    <div class="roadmap-step">
+      <div class="step-circle todo">5</div>
+      <div class="step-body">
+        <h3>Day 7 — Land a discovery call or refine the approach</h3>
+        <p>After 10 calls you'll know what's working and what isn't. Land one discovery call this week and you're ahead of 99% of people who "want to start a business."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMUNITY -->
+<section class="section" id="community" style="padding-top:0">
+  <div class="section-label">The Clan</div>
+  <h2 class="section-heading">Connect With The Builders</h2>
+  <p class="section-sub">The clan isn't just access to content — it's access to people building in real time. Join the community and introduce yourself today.</p>
+  <div class="community-grid">
+    <a href="#" class="community-card">
+      <div class="community-icon">💬</div>
+      <h3>Telegram Group</h3>
+      <p>Daily activity. Share wins, ask questions, find collaborators. This is where the clan operates day to day.</p>
+      <div class="community-link">Join the Group →</div>
+    </a>
+    <a href="#" class="community-card">
+      <div class="community-icon">🎙️</div>
+      <h3>Discord Server</h3>
+      <p>Organized channels by income stream, voice calls, project rooms, and a dedicated channel just for first wins.</p>
+      <div class="community-link">Join Discord →</div>
+    </a>
+    <a href="#" class="community-card">
+      <div class="community-icon">📱</div>
+      <h3>Instagram / TikTok</h3>
+      <p>Follow the clan socials. See wins being shared in public. Connect with other members building in the open.</p>
+      <div class="community-link">Follow @caelum →</div>
+    </a>
+  </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<div class="bottom-cta">
+  <div class="bottom-cta-max">
+    <h2>You're in. Now Execute.</h2>
+    <p>The clan is built by builders. Every win you post, every client you land, every strategy you share — that's what makes Caelum compound. Your move.</p>
+    <div class="cta-btns">
+      <a href="#blueprint" class="btn-main">Start the Blueprint →</a>
+      <a href="#community" class="btn-ghost">Join the Community</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">CAELUM</div>
+  <p style="font-size:0.75rem;color:var(--dim);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1rem">Heaven • The Void Above All</p>
+  <p>© 2026 Caelum. Built by the clan, for the clan.</p>
+  <p style="margin-top:0.5rem">Free forever. Rise together.</p>
+</footer>
+
+</body>
+</html>

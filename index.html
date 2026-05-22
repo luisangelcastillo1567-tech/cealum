@@ -384,8 +384,9 @@ footer p{font-size:0.75rem;color:var(--dim)}
       <div class="join-free-badge">✦ Free to Join — Always</div>
       <h2>Ready to Ascend?</h2>
       <p>The void above all is not empty — it's where the next version of you is waiting. Join the clan. Escape the matrix. Build real wealth, together.</p>
-      <form class="join-form" onsubmit="return false;">
-        <input type="email" placeholder="Enter your email"/>
+      <form class="join-form" name="join" method="POST" action="/welcome.html" data-netlify="true">
+        <input type="hidden" name="form-name" value="join"/>
+        <input type="email" name="email" placeholder="Enter your email" required/>
         <button type="submit" class="btn-main">Join Caelum Free →</button>
       </form>
       <div class="join-perks">
