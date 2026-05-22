@@ -1,338 +1,410 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>CAELUM — Heaven / The Void Above All</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<link href="smooth-scroll.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --void:#05040e;
+  --deep:#0a0818;
+  --surface:#0f0c1e;
+  --card:#13102a;
+  --card2:#1a1535;
+  --border:rgba(127,119,221,0.15);
+  --border2:rgba(127,119,221,0.3);
+  --purple:#534AB7;
+  --purple-light:#7F77DD;
+  --purple-pale:#AFA9EC;
+  --teal:#1D9E75;
+  --teal-light:#5DCAA5;
+  --coral:#D85A30;
+  --text:#f0eeff;
+  --muted:#9990cc;
+  --dim:#443d66;
+  --gold:#c9a84c;
+}
 html{scroll-behavior:smooth}
-body{background:#050709;color:#c9b97a;font-family:'EB Garamond',serif;overflow-x:hidden}
-canvas#stars{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+body{font-family:'Inter',sans-serif;background:var(--void);color:var(--text);overflow-x:hidden;line-height:1.6}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 40px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(180deg,rgba(5,7,9,0.95),transparent);backdrop-filter:blur(10px);transition:all 0.4s ease}
-nav.scrolled{background:rgba(5,7,9,0.98);padding:14px 40px;box-shadow:0 2px 30px rgba(0,0,0,0.5)}
-.nav-brand{font-family:'Cinzel Decorative',serif;font-size:1.4rem;color:#d4a843;letter-spacing:0.15em;text-decoration:none}
-.nav-links{display:flex;gap:30px;list-style:none}
-.nav-links a{font-family:'Cinzel',serif;font-size:0.75rem;letter-spacing:0.2em;color:#6b5a2a;text-transform:uppercase;text-decoration:none;transition:color 0.3s}
-.nav-links a:hover{color:#d4a843}
-.nav-cta{background:linear-gradient(135deg,#d4a843,#c99a35);color:#050709;padding:10px 24px;font-family:'Cinzel',serif;font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:all 0.3s}
-.nav-cta:hover{box-shadow:0 4px 20px rgba(212,168,67,0.3);transform:translateY(-1px)}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--void)}
+::-webkit-scrollbar-thumb{background:var(--purple);border-radius:2px}
 
-/* HERO */
-.hero{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:120px 24px 80px}
-.hero-badge{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.5em;color:#4a3e20;text-transform:uppercase;margin-bottom:30px;opacity:0;animation:fadeIn 1s ease 0.3s forwards}
-.hero h1{font-family:'Cinzel Decorative',serif;font-size:clamp(3rem,8vw,6rem);color:#d4a843;line-height:1;margin-bottom:12px;text-shadow:0 0 80px rgba(212,168,67,0.15);opacity:0;animation:fadeIn 1.2s ease 0.5s forwards}
-.hero-sub{font-family:'Cinzel',serif;font-size:clamp(0.9rem,2vw,1.2rem);letter-spacing:0.4em;color:#6b5a2a;text-transform:uppercase;margin-bottom:50px;opacity:0;animation:fadeIn 1s ease 0.8s forwards}
-.hero-tagline{font-size:1.15rem;color:#8a7a5a;font-style:italic;line-height:1.8;max-width:560px;margin-bottom:50px;opacity:0;animation:fadeIn 1s ease 1s forwards}
-.hero-divider{width:60px;height:1px;background:linear-gradient(90deg,transparent,#d4a843,transparent);margin:0 auto 50px;opacity:0;animation:fadeIn 1s ease 1.2s forwards}
-.scroll-hint{opacity:0;animation:fadeIn 1s ease 2s forwards,float 3s ease-in-out infinite}
-.scroll-hint span{display:block;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.3em;color:#3a3218;text-transform:uppercase;margin-bottom:10px}
-.scroll-arrow{width:1px;height:40px;background:linear-gradient(180deg,#d4a843,transparent);margin:0 auto}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.25rem 2.5rem;background:rgba(5,4,14,0.9);backdrop-filter:blur(20px);border-bottom:0.5px solid var(--border)}
+.nav-logo{font-size:1.1rem;font-weight:900;letter-spacing:0.15em;background:linear-gradient(135deg,#AFA9EC,#5DCAA5);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-links{display:flex;gap:2rem}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:0.8rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;transition:color 0.2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{background:transparent;color:var(--purple-pale);border:0.5px solid var(--border2);padding:0.55rem 1.25rem;border-radius:6px;font-size:0.8rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;text-decoration:none}
+.nav-cta:hover{background:rgba(83,74,183,0.15);border-color:var(--purple-light)}
 
-/* SECTIONS */
-section{position:relative;z-index:1;padding:120px 24px}
-.section-inner{max-width:900px;margin:0 auto}
-.section-badge{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.5em;color:#4a3e20;text-transform:uppercase;margin-bottom:16px}
-.section-title{font-family:'Cinzel Decorative',serif;font-size:clamp(1.6rem,4vw,2.4rem);color:#d4a843;margin-bottom:16px;line-height:1.2}
-.section-desc{font-size:1.1rem;color:#8a7a5a;line-height:1.8;max-width:600px}
-.divider-line{width:60px;height:1px;background:linear-gradient(90deg,transparent,#d4a843,transparent);margin:30px 0}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8rem 2rem 5rem;position:relative;overflow:hidden}
+.hero-orb{position:absolute;border-radius:50%;pointer-events:none}
+.orb1{width:700px;height:700px;background:radial-gradient(circle,rgba(83,74,183,0.12) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%)}
+.orb2{width:400px;height:400px;background:radial-gradient(circle,rgba(29,158,117,0.08) 0%,transparent 70%);top:20%;right:10%}
+.orb3{width:300px;height:300px;background:radial-gradient(circle,rgba(216,90,48,0.06) 0%,transparent 70%);bottom:20%;left:5%}
 
-/* VISION */
-.vision-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px;margin-top:60px}
-.vision-card{text-align:center;padding:40px 24px;border:1px solid rgba(212,168,67,0.08);border-radius:4px;transition:all 0.4s ease}
-.vision-card:hover{border-color:rgba(212,168,67,0.25);background:rgba(212,168,67,0.03);transform:translateY(-4px)}
-.vision-icon{font-size:32px;margin-bottom:20px;display:block}
-.vision-label{font-family:'Cinzel',serif;font-size:0.85rem;letter-spacing:0.15em;color:#d4a843;text-transform:uppercase;margin-bottom:12px}
-.vision-text{font-size:0.95rem;color:#8a7a5a;line-height:1.6}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(83,74,183,0.1);border:0.5px solid var(--border2);color:var(--purple-pale);font-size:0.7rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:0.45rem 1.1rem;border-radius:20px;margin-bottom:2.5rem}
+.hero-dot{width:5px;height:5px;border-radius:50%;background:var(--teal-light);animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
 
-/* ORIGIN STORY */
-.origin-section{text-align:center;background:linear-gradient(180deg,transparent,rgba(5,7,9,0.6),transparent)}
-.origin-inner{max-width:720px;margin:0 auto}
-.origin-title{font-family:'Cinzel Decorative',serif;font-size:clamp(1.4rem,3.5vw,2rem);color:#d4a843;line-height:1.3;margin-bottom:50px}
-.origin-text{font-size:1.05rem;color:#8a7a5a;font-style:italic;line-height:2;margin-bottom:30px;text-align:center}
-.origin-closing{font-family:'Cinzel',serif;font-size:clamp(0.85rem,2vw,1.05rem);letter-spacing:0.15em;color:#d4a843;text-transform:uppercase;line-height:1.8;margin-top:50px}
+.hero-est{font-size:0.7rem;font-weight:600;letter-spacing:0.25em;color:var(--dim);text-transform:uppercase;margin-bottom:1.5rem}
+h1.hero-title{font-size:clamp(3.5rem,9vw,7rem);font-weight:900;letter-spacing:-0.04em;line-height:0.95;margin-bottom:0.5rem}
+.hero-title-top{display:block;background:linear-gradient(135deg,#f0eeff 0%,#AFA9EC 50%,#5DCAA5 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub-title{display:block;font-size:clamp(1.2rem,3vw,2rem);font-weight:300;letter-spacing:0.12em;color:var(--muted);margin-top:0.75rem;margin-bottom:2.5rem}
+.hero-tagline{font-size:clamp(1rem,2vw,1.2rem);color:var(--muted);max-width:560px;margin:0 auto 3rem;line-height:1.7;font-weight:400}
+.hero-tagline span{color:var(--teal-light);font-weight:500}
 
-/* PRODUCTS */
-.products-section{background:linear-gradient(180deg,transparent,rgba(212,168,67,0.02),transparent)}
-.products-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:60px}
-.product-card{background:rgba(10,12,18,0.8);border:1px solid rgba(212,168,67,0.12);border-radius:6px;padding:40px 30px;transition:all 0.4s ease;position:relative;overflow:hidden}
-.product-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#d4a843,transparent);opacity:0;transition:opacity 0.4s}
-.product-card:hover{border-color:rgba(212,168,67,0.3);transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,0.4)}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-bottom:4rem}
+.btn-main{background:linear-gradient(135deg,var(--purple),#7F77DD);color:#fff;padding:1rem 2.5rem;border-radius:8px;font-size:1rem;font-weight:700;letter-spacing:0.04em;border:none;cursor:pointer;transition:all 0.25s;text-decoration:none;display:inline-block}
+.btn-main:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(83,74,183,0.35)}
+.btn-ghost{background:transparent;color:var(--text);padding:1rem 2.5rem;border-radius:8px;font-size:1rem;font-weight:500;border:0.5px solid var(--border2);cursor:pointer;transition:all 0.25s;text-decoration:none;display:inline-block}
+.btn-ghost:hover{border-color:var(--purple-light);background:rgba(83,74,183,0.08)}
+
+.hero-badges{display:flex;gap:2.5rem;justify-content:center;flex-wrap:wrap}
+.hero-badge{text-align:center}
+.hero-badge-val{font-size:1.5rem;font-weight:800;background:linear-gradient(135deg,#f0eeff,#AFA9EC);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-badge-lbl{font-size:0.7rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-top:2px}
+
+.section-divider{height:0.5px;background:linear-gradient(90deg,transparent,var(--border2),transparent);margin:0 auto;max-width:800px}
+
+.section{padding:6rem 2rem;max-width:1100px;margin:0 auto}
+.section-label{font-size:0.7rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal-light);margin-bottom:0.75rem}
+.section-heading{font-size:clamp(2rem,5vw,3.25rem);font-weight:800;letter-spacing:-0.03em;line-height:1.1;margin-bottom:1.25rem}
+.section-sub{font-size:1.05rem;color:var(--muted);max-width:540px;line-height:1.75;margin-bottom:3.5rem}
+
+.phi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--border);border:0.5px solid var(--border);border-radius:16px;overflow:hidden}
+.phi-card{background:var(--card);padding:2rem;transition:background 0.2s}
+.phi-card:hover{background:var(--card2)}
+.phi-icon{font-size:1.5rem;margin-bottom:1rem;opacity:0.8}
+.phi-card h3{font-size:1rem;font-weight:600;margin-bottom:0.5rem;letter-spacing:0.02em}
+.phi-card p{font-size:0.875rem;color:var(--muted);line-height:1.65}
+
+.story-box{background:var(--card);border:0.5px solid var(--border);border-radius:16px;padding:3rem;position:relative;overflow:hidden}
+.story-box::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--purple),transparent)}
+.story-text{font-size:1.05rem;color:var(--muted);line-height:1.9;max-width:700px}
+.story-text p{margin-bottom:1.5rem}
+.story-text p:last-child{margin-bottom:0;color:var(--text);font-style:italic;font-size:1.1rem}
+.story-text strong{color:var(--text);font-weight:500}
+
+.products-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
+.product-card{background:var(--card);border:0.5px solid var(--border);border-radius:14px;padding:1.75rem;position:relative;overflow:hidden;transition:all 0.25s}
+.product-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--purple),var(--teal));opacity:0;transition:opacity 0.25s}
+.product-card:hover{border-color:var(--border2);transform:translateY(-3px)}
 .product-card:hover::before{opacity:1}
-.product-number{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.3em;color:#3a3218;text-transform:uppercase;margin-bottom:16px}
-.product-name{font-family:'Cinzel',serif;font-size:1.1rem;color:#d4a843;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px}
-.product-desc{font-size:0.95rem;color:#8a7a5a;line-height:1.6}
-.product-tag{display:inline-block;margin-top:16px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;color:#4a3e20;text-transform:uppercase;border:1px solid rgba(212,168,67,0.15);padding:6px 14px;border-radius:2px}
+.product-num{font-size:0.65rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--purple-pale);margin-bottom:0.75rem}
+.product-card h3{font-size:1.15rem;font-weight:700;margin-bottom:0.5rem}
+.product-card p{font-size:0.85rem;color:var(--muted);line-height:1.65;margin-bottom:1rem}
+.product-tag{display:inline-block;font-size:0.65rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:3px 10px;border-radius:20px;background:rgba(83,74,183,0.15);color:var(--purple-pale);border:0.5px solid var(--border2)}
 
-/* WHAT YOU LEARN */
-.learn-list{margin-top:50px;display:grid;grid-template-columns:1fr 1fr;gap:16px 40px}
-.learn-item{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-bottom:1px solid rgba(212,168,67,0.06)}
-.learn-check{color:#d4a843;font-size:14px;margin-top:3px;flex-shrink:0}
-.learn-text{font-size:0.95rem;color:#8a7a5a;line-height:1.5}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0.75rem}
+.feature-item{display:flex;align-items:flex-start;gap:12px;padding:1rem;background:var(--card);border:0.5px solid var(--border);border-radius:10px}
+.feature-check{width:20px;height:20px;border-radius:50%;background:rgba(29,158,117,0.15);border:0.5px solid rgba(93,202,165,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;font-size:0.65rem;color:var(--teal-light)}
+.feature-item span{font-size:0.875rem;color:var(--muted);line-height:1.5}
 
-/* OFFER */
-.offer-section{text-align:center}
-.offer-box{max-width:600px;margin:50px auto 0;background:linear-gradient(135deg,rgba(212,168,67,0.06),rgba(212,168,67,0.02));border:1px solid rgba(212,168,67,0.2);border-radius:8px;padding:50px 40px;position:relative}
-.offer-box::before{content:'';position:absolute;top:-1px;left:20%;right:20%;height:1px;background:linear-gradient(90deg,transparent,#d4a843,transparent)}
-.offer-price{font-family:'Cinzel Decorative',serif;font-size:3rem;color:#d4a843;margin:20px 0 8px}
-.offer-was{font-family:'Cinzel',serif;font-size:1rem;color:#5a5040;text-decoration:line-through;letter-spacing:0.1em}
-.offer-note{font-size:0.95rem;color:#6b5a2a;margin-bottom:30px}
-#paypal-button-container{max-width:320px;margin:30px auto}
-.offer-trust{display:flex;justify-content:center;gap:30px;margin-top:30px;flex-wrap:wrap}
-.trust-item{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.15em;color:#4a3e20;text-transform:uppercase}
+.clan-section{background:var(--deep);padding:6rem 2rem}
+.clan-inner{max-width:1100px;margin:0 auto}
+.clan-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-top:3rem}
+.clan-card{background:var(--card);border:0.5px solid var(--border);border-radius:14px;padding:1.75rem;transition:all 0.25s}
+.clan-card:hover{border-color:var(--border2);transform:translateY(-3px)}
+.clan-card-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;margin-bottom:1rem}
+.clan-card h3{font-size:1rem;font-weight:600;margin-bottom:0.5rem}
+.clan-card p{font-size:0.85rem;color:var(--muted);line-height:1.65}
 
-/* FOOTER */
-footer{position:relative;z-index:1;text-align:center;padding:80px 24px 40px;border-top:1px solid rgba(212,168,67,0.06)}
-footer .nav-brand{font-size:1.1rem;display:block;margin-bottom:12px}
-footer p{font-size:0.85rem;color:#3a3218;letter-spacing:0.1em}
+.steps-list{display:flex;flex-direction:column;gap:0;max-width:680px}
+.step-row{display:flex;gap:1.5rem;padding-bottom:2.5rem;position:relative}
+.step-row:not(:last-child)::before{content:'';position:absolute;left:19px;top:46px;bottom:0;width:1px;background:linear-gradient(to bottom,var(--border2),transparent)}
+.step-num{width:40px;height:40px;border-radius:50%;background:rgba(83,74,183,0.15);border:0.5px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:700;color:var(--purple-pale);flex-shrink:0}
+.step-content h3{font-size:1rem;font-weight:600;margin-bottom:0.4rem}
+.step-content p{font-size:0.875rem;color:var(--muted);line-height:1.65}
 
-/* TEST MODE LINK */
-.test-link{position:fixed;bottom:20px;left:20px;font-family:'Cinzel',serif;font-size:10px;color:#2a2418;text-decoration:none;opacity:0.3;transition:opacity 0.3s;z-index:100}
-.test-link:hover{opacity:1;color:#4a3e20}
-.admin-link{position:fixed;bottom:20px;right:20px;font-family:'Cinzel',serif;font-size:10px;color:#2a2418;text-decoration:none;opacity:0.3;transition:opacity 0.3s;z-index:100}
-.admin-link:hover{opacity:1;color:#4a3e20}
+.join-section{padding:6rem 2rem}
+.join-inner{max-width:780px;margin:0 auto;text-align:center}
+.join-box{background:var(--card);border:0.5px solid var(--border);border-radius:24px;padding:4.5rem 3rem;position:relative;overflow:hidden}
+.join-box::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--purple),var(--teal),transparent)}
+.join-box h2{font-size:clamp(2rem,5vw,3rem);font-weight:900;letter-spacing:-0.03em;margin-bottom:1rem;background:linear-gradient(135deg,#f0eeff,#AFA9EC,#5DCAA5);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.join-box p{color:var(--muted);font-size:1rem;max-width:480px;margin:0 auto 2rem;line-height:1.75}
+.join-free-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(29,158,117,0.1);border:0.5px solid rgba(93,202,165,0.3);color:var(--teal-light);font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 1rem;border-radius:20px;margin-bottom:1.5rem}
+.join-form{display:flex;gap:0.75rem;max-width:440px;margin:0 auto;flex-wrap:wrap;justify-content:center}
+.join-form input{flex:1;min-width:220px;background:rgba(255,255,255,0.05);border:0.5px solid var(--border2);color:var(--text);padding:0.9rem 1.1rem;border-radius:8px;font-size:0.9rem;font-family:inherit;outline:none;transition:border-color 0.2s}
+.join-form input:focus{border-color:var(--purple-light)}
+.join-form input::placeholder{color:var(--dim)}
+.join-perks{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem}
+.join-perk{font-size:0.75rem;color:var(--muted);display:flex;align-items:center;gap:5px}
+.join-perk::before{content:'✓';color:var(--teal-light);font-weight:700}
 
-/* MOBILE */
+footer{border-top:0.5px solid var(--border);padding:3rem 2rem;text-align:center}
+.footer-logo{font-size:1rem;font-weight:900;letter-spacing:0.18em;background:linear-gradient(135deg,#AFA9EC,#5DCAA5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.5rem}
+.footer-tagline{font-size:0.75rem;color:var(--dim);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1.5rem}
+footer p{font-size:0.75rem;color:var(--dim)}
+
 @media(max-width:768px){
-  nav{padding:16px 20px}
+  nav{padding:1rem 1.25rem}
   .nav-links{display:none}
-  .vision-grid{grid-template-columns:1fr}
-  .products-grid{grid-template-columns:1fr}
-  .learn-list{grid-template-columns:1fr}
-  .offer-box{padding:40px 24px}
-  .offer-trust{flex-direction:column;gap:12px}
+  .hero{padding:7rem 1.25rem 4rem}
+  .section{padding:4rem 1.25rem}
+  .story-box{padding:2rem 1.5rem}
+  .join-box{padding:3rem 1.5rem}
+  .clan-section{padding:4rem 1.25rem}
 }
 </style>
 </head>
 <body>
-<canvas id="stars"></canvas>
 
-<!-- NAV -->
-<nav id="navbar">
-  <a href="#" class="nav-brand">CAELUM</a>
-  <ul class="nav-links">
-    <li><a href="#vision">Vision</a></li>
-    <li><a href="#origin">Story</a></li>
-    <li><a href="#products">Products</a></li>
-    <li><a href="#learn">Inside</a></li>
-    <li><a href="#offer">Pricing</a></li>
-  </ul>
-  <a href="#offer" class="nav-cta">Get Access</a>
+<nav>
+  <div class="nav-logo">CAELUM</div>
+  <div class="nav-links">
+    <a href="#vision">Vision</a>
+    <a href="#origin">Story</a>
+    <a href="#projects">System</a>
+    <a href="#clan">The Clan</a>
+    <a href="#join">Join</a>
+  </div>
+  <a href="#join" class="nav-cta">Join Free →</a>
 </nav>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-badge">Est. MMXXVI</div>
-  <h1>CAELUM</h1>
-  <div class="hero-sub">Heaven &bull; The Void Above All</div>
-  <div class="hero-divider"></div>
-  <p class="hero-tagline">A sovereign system for those ready to build an AI agency from nothing — and ascend beyond the noise.</p>
-  <div class="scroll-hint">
-    <span>Descend</span>
-    <div class="scroll-arrow"></div>
+<section class="hero">
+  <div class="hero-orb orb1"></div>
+  <div class="hero-orb orb2"></div>
+  <div class="hero-orb orb3"></div>
+  <div class="hero-est">Est. MMXXVI</div>
+  <div class="hero-eyebrow"><span class="hero-dot"></span> Free to Join · Build Together · Everyone Eats</div>
+  <h1 class="hero-title">
+    <span class="hero-title-top">CAELUM</span>
+    <span class="hero-sub-title">Heaven • The Void Above All</span>
+  </h1>
+  <p class="hero-tagline">
+    A <span>free clan</span> for people who are done waiting. We build real income together — AI agencies, trading, ecom — and <span>everyone who builds, earns</span>. No 9-5. No gatekeeping. No cost to join.
+  </p>
+  <div class="hero-btns">
+    <a href="#join" class="btn-main">Join the Clan — Free →</a>
+    <a href="#vision" class="btn-ghost">See the Mission</a>
+  </div>
+  <div class="hero-badges">
+    <div class="hero-badge">
+      <div class="hero-badge-val">$0</div>
+      <div class="hero-badge-lbl">To join, always</div>
+    </div>
+    <div class="hero-badge">
+      <div class="hero-badge-val">30</div>
+      <div class="hero-badge-lbl">Days to first income</div>
+    </div>
+    <div class="hero-badge">
+      <div class="hero-badge-val">∞</div>
+      <div class="hero-badge-lbl">Earning potential</div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<section class="section" id="vision">
+  <div class="section-label">The Philosophy</div>
+  <h2 class="section-heading">Built for Builders,<br/>Not Spectators</h2>
+  <p class="section-sub">CAELUM is not a course. It's a clan — a complete operating system for building real income, designed for people who execute. You join free, you build with us, and you eat with us.</p>
+  <div class="phi-grid">
+    <div class="phi-card">
+      <div class="phi-icon">◓</div>
+      <h3>No Code Required</h3>
+      <p>Every tool, script, and system works without writing a single line of code. If you have a phone and wifi, you can build.</p>
+    </div>
+    <div class="phi-card">
+      <div class="phi-icon">◎</div>
+      <h3>30-Day System</h3>
+      <p>A structured path from zero to your first paying client in under a month. Real steps. Real results. Real money.</p>
+    </div>
+    <div class="phi-card">
+      <div class="phi-icon">◈</div>
+      <h3>Everyone Eats</h3>
+      <p>This isn't one person at the top getting rich. Every clan member who builds contributes — and every contributor earns.</p>
+    </div>
+    <div class="phi-card">
+      <div class="phi-icon">◉</div>
+      <h3>Escape the 9-5</h3>
+      <p>Built for people trapped in the matrix. We give you the plan, the tools, and the people to break free — for good.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="origin">
+  <div class="section-label">The Beginning</div>
+  <h2 class="section-heading">I Started With Nothing.<br/><span style="color:var(--muted);font-weight:300">No Connections. No Capital. No Degree.</span></h2>
+  <div class="story-box" style="margin-top:2rem">
+    <div class="story-text">
+      <p>Two years ago I was broke, scrolling through job listings at 2 AM, wondering why the world seemed designed for people who already had everything. I had a laptop and a wifi connection. That was it.</p>
+      <p>Then I discovered something the gatekeepers didn't want me to know: <strong>AI had leveled the playing field.</strong> Overnight, a single person with the right tools could deliver what used to require a full agency. I didn't need permission. I needed a system.</p>
+      <p>I built that system. Within 90 days, I was earning more than my old salary. Within six months, I had a roster of clients who thought they were hiring a team. They were hiring me — and my AI stack.</p>
+      <p>CAELUM exists because I remember what it felt like to have nothing but hunger. I don't want to sell you this system. <strong>I want to build with you.</strong> That's why it's free. That's why it's a clan. When you win — we all win.</p>
+      <p>"The void above all is not empty. It's where the next version of you is waiting."</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="projects">
+  <div class="section-label">The System</div>
+  <h2 class="section-heading">Four Tools.<br/>One Ecosystem.</h2>
+  <p class="section-sub">Everything you need to build a profitable AI agency. Everything interconnected. Everything free for clan members.</p>
+  <div class="products-grid">
+    <div class="product-card">
+      <div class="product-num">Product I</div>
+      <h3>The Blueprint</h3>
+      <p>Complete 4-module course. Client acquisition, cold calling scripts, pricing models, and 17 no-code AI tools broken down step by step.</p>
+      <span class="product-tag">Core Foundation</span>
+    </div>
+    <div class="product-card">
+      <div class="product-num">Product II</div>
+      <h3>3D Interactive</h3>
+      <p>The Blueprint reimagined as a premium page-turning 3D experience. Immersive learning that feels like the future.</p>
+      <span class="product-tag">Premium Experience</span>
+    </div>
+    <div class="product-card">
+      <div class="product-num">Product III</div>
+      <h3>Sovereign Assistant</h3>
+      <p>An AI tutor trained on the entire Blueprint. Ask questions, get strategies, practice cold calls — available 24/7.</p>
+      <span class="product-tag">AI-Powered</span>
+    </div>
+    <div class="product-card">
+      <div class="product-num">Product IV</div>
+      <h3>Command Center</h3>
+      <p>Your personal dashboard to track progress, access all resources, and manage your agency launch from one place.</p>
+      <span class="product-tag">Operations Hub</span>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="learn">
+  <div class="section-label">What's Inside</div>
+  <h2 class="section-heading">Everything You Need.<br/>Nothing You Don't.</h2>
+  <p class="section-sub">No filler. No fluff. Every resource is built to move you forward — and it's all included when you join the clan.</p>
+  <div class="features-grid">
+    <div class="feature-item"><span class="feature-check">✓</span><span>30-day step-by-step launch system</span></div>
+    <div class="feature-item"><span class="feature-check">✓</span><span>Cold calling scripts that actually close</span></div>
+    <div class="feature-item"><span class="feature-check">✓</span><span>17 no-code AI tools breakdown</span></div>
+    <div class="feature-item"><span class="feature-check">✓</span><span>Find clients on Google Maps method</span></div>
+    <div class="feature-item"><span class="feature-check">✓</span><span>Pricing & recurring revenue models</span></div>
+    <div class="feature-item"><span class="feature-check">✓</span><span>AI-powered study assistant (24/7)</span></div>
+    <div class="feature-item"><span class="feature-check">✓</span><span>3D immersive learning experience</span></div>
+    <div class="feature-item"><span class="feature-check">✓</span><span>Trading & investment strategies</span></div>
+    <div class="feature-item"><span class="feature-check">✓</span><span>Ecom & dropshipping playbook</span></div>
+    <div class="feature-item"><span class="feature-check">✓</span><span>Personal wealth-building roadmap</span></div>
+    <div class="feature-item"><span class="feature-check">✓</span><span>Full clan access & community</span></div>
+    <div class="feature-item"><span class="feature-check">✓</span><span>Forever updates & new content</span></div>
+  </div>
+</section>
+
+<div class="clan-section" id="clan">
+  <div class="clan-inner">
+    <div class="section-label">The Clan</div>
+    <h2 class="section-heading">We Escape Together.<br/>We Build Together.<br/>We Eat Together.</h2>
+    <p class="section-sub">Most people are stuck in the matrix — trading time for money, waiting for permission, watching others win. Caelum is a clan of people who decided enough is enough. We don't gatekeep. We don't compete with each other. We compound.</p>
+    <div class="clan-grid">
+      <div class="clan-card">
+        <div class="clan-card-icon" style="background:rgba(83,74,183,0.15)">🧠</div>
+        <h3>Same mindset, same mission</h3>
+        <p>Everyone in this clan is obsessed with the same thing — building real wealth. No broke mentality. No excuses. Just builders.</p>
+      </div>
+      <div class="clan-card">
+        <div class="clan-card-icon" style="background:rgba(29,158,117,0.15)">⚡</div>
+        <h3>You build, you earn</h3>
+        <p>Every member who contributes to a project earns from it. Build an AI agency, a store, a trading system — and own a piece of what you create.</p>
+      </div>
+      <div class="clan-card">
+        <div class="clan-card-icon" style="background:rgba(216,90,48,0.15)">🔥</div>
+        <h3>Multiple income streams</h3>
+        <p>AI agencies, crypto & forex trading, ecommerce, content — the clan runs multiple projects at once. More lanes = more ways to earn.</p>
+      </div>
+      <div class="clan-card">
+        <div class="clan-card-icon" style="background:rgba(201,168,76,0.15)">👑</div>
+        <h3>Pull the next person up</h3>
+        <p>Once you're making money, you help bring in and guide the next builder. That's how the clan grows — and how the income compounds.</p>
+      </div>
+      <div class="clan-card">
+        <div class="clan-card-icon" style="background:rgba(175,169,236,0.15)">🛠️</div>
+        <h3>Start from absolute zero</h3>
+        <p>No capital needed. No degree. No connections. Just your hunger and a wifi connection. We built this for people who had nothing.</p>
+      </div>
+      <div class="clan-card">
+        <div class="clan-card-icon" style="background:rgba(93,202,165,0.15)">🌐</div>
+        <h3>Free. Forever.</h3>
+        <p>Joining Caelum costs nothing. The clan, the tools, the system, the community — all free. Because wealth shouldn't require wealth to access.</p>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- VISION -->
-<section id="vision">
-  <div class="section-inner">
-    <div class="section-badge">The Philosophy</div>
-    <h2 class="section-title">Built for Sovereigns,<br>Not Spectators</h2>
-    <div class="divider-line"></div>
-    <p class="section-desc">CAELUM is not a course. It is a complete operating system for building a profitable AI agency in 30 days — designed for people who execute, not just consume.</p>
-    <div class="vision-grid">
-      <div class="vision-card">
-        <span class="vision-icon">&#9683;</span>
-        <div class="vision-label">No Code Required</div>
-        <p class="vision-text">Every tool, script, and system works without writing a single line of code</p>
+<section class="section" id="how">
+  <div class="section-label">How It Works</div>
+  <h2 class="section-heading">Join. Build. Get Paid.<br/>Pull Someone Up.</h2>
+  <p class="section-sub">No experience needed. No money required. Just show up with the hunger to change your life.</p>
+  <div class="steps-list">
+    <div class="step-row">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h3>Join free — no barriers, no fees</h3>
+        <p>Drop your email and you're in. No course to buy, no subscription, no credit card. The clan is free to join, always.</p>
       </div>
-      <div class="vision-card">
-        <span class="vision-icon">&#9678;</span>
-        <div class="vision-label">30-Day System</div>
-        <p class="vision-text">A structured path from zero to your first paying client in under a month</p>
+    </div>
+    <div class="step-row">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h3>Get your personal roadmap</h3>
+        <p>Tell us where you are. We build a custom plan around your situation — what to build first, in what order, to hit your first income milestone.</p>
       </div>
-      <div class="vision-card">
-        <span class="vision-icon">&#9672;</span>
-        <div class="vision-label">Lifetime Access</div>
-        <p class="vision-text">One payment. No subscriptions. Every future update included forever</p>
+    </div>
+    <div class="step-row">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h3>Learn the system, pick your lane</h3>
+        <p>AI agency, trading, ecom, content — pick the income stream that fits your life and start executing with the full Blueprint and clan behind you.</p>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h3>Build inside a live project</h3>
+        <p>You're not studying — you're contributing to something real alongside the clan. Every hour you put in goes toward a project that generates revenue.</p>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <h3>Earn your share, grow the clan</h3>
+        <p>Contributors earn from what they help build. And once you're making money, you help bring in the next person. That's how Caelum compounds.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ORIGIN STORY -->
-<section id="origin" class="origin-section">
-  <div class="section-inner origin-inner">
-    <div class="section-badge">The Beginning</div>
-    <h2 class="origin-title">I Started With Nothing.<br>No Connections. No Capital. No Degree.</h2>
-    <div class="divider-line" style="margin:40px auto"></div>
-    <p class="origin-text">Two years ago I was broke, scrolling through job listings at 2 AM, wondering why the world seemed designed for people who already had everything. I had a laptop and a wifi connection. That was it.</p>
-    <p class="origin-text">Then I discovered something the gatekeepers didn't want me to know: AI had leveled the playing field. Overnight, a single person with the right tools could deliver what used to require a full agency. I didn't need permission. I needed a system.</p>
-    <p class="origin-text">I built that system. Within 90 days, I was earning more than my old salary. Within six months, I had a roster of clients who thought they were hiring a team. They were hiring me — and my AI stack.</p>
-    <p class="origin-text">CAELUM exists because I remember what it felt like to have nothing but hunger. If that's you right now — if you're tired of waiting, tired of asking, tired of being told to be patient — this is your signal.</p>
-    <div class="origin-closing">
-      The void above all is not empty.<br>
-      It's where the next version of you is waiting.
-    </div>
-  </div>
-</section>
-
-<!-- PRODUCTS -->
-<section id="products" class="products-section">
-  <div class="section-inner">
-    <div class="section-badge">The System</div>
-    <h2 class="section-title">Four Products. One Ecosystem.</h2>
-    <div class="divider-line"></div>
-    <p class="section-desc">Everything interconnected. Everything you need. Nothing you don't.</p>
-    <div class="products-grid">
-      <div class="product-card">
-        <div class="product-number">Product I</div>
-        <div class="product-name">The Blueprint</div>
-        <p class="product-desc">Complete 4-module course. Client acquisition, cold calling scripts, pricing models, and 17 no-code AI tools broken down step by step.</p>
-        <span class="product-tag">Core Foundation</span>
-      </div>
-      <div class="product-card">
-        <div class="product-number">Product II</div>
-        <div class="product-name">3D Interactive</div>
-        <p class="product-desc">The Blueprint reimagined as a premium page-turning 3D experience. Immersive learning that feels like the future.</p>
-        <span class="product-tag">Premium Experience</span>
-      </div>
-      <div class="product-card">
-        <div class="product-number">Product III</div>
-        <div class="product-name">Sovereign Assistant</div>
-        <p class="product-desc">An AI tutor trained on the entire Blueprint. Ask questions, get strategies, practice cold calls — available 24/7.</p>
-        <span class="product-tag">AI-Powered</span>
-      </div>
-      <div class="product-card">
-        <div class="product-number">Product IV</div>
-        <div class="product-name">Command Center</div>
-        <p class="product-desc">Your personal dashboard to track progress, access all resources, and manage your agency launch from one place.</p>
-        <span class="product-tag">Operations Hub</span>
+<section class="join-section" id="join">
+  <div class="join-inner">
+    <div class="join-box">
+      <div class="join-free-badge">✦ Free to Join — Always</div>
+      <h2>Ready to Ascend?</h2>
+      <p>The void above all is not empty — it's where the next version of you is waiting. Join the clan. Escape the matrix. Build real wealth, together.</p>
+      <form class="join-form" onsubmit="return false;">
+        <input type="email" placeholder="Enter your email"/>
+        <button type="submit" class="btn-main">Join Caelum Free →</button>
+      </form>
+      <div class="join-perks">
+        <span class="join-perk">Free forever</span>
+        <span class="join-perk">No credit card</span>
+        <span class="join-perk">Instant access</span>
+        <span class="join-perk">All 4 products included</span>
+        <span class="join-perk">Full clan access</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- WHAT YOU LEARN -->
-<section id="learn">
-  <div class="section-inner">
-    <div class="section-badge">What's Inside</div>
-    <h2 class="section-title">Everything You Need to Launch</h2>
-    <div class="divider-line"></div>
-    <p class="section-desc">No filler. No fluff. Every module is built to move you forward.</p>
-    <div class="learn-list">
-      <div class="learn-item">
-        <span class="learn-check">&#10003;</span>
-        <span class="learn-text">30-day step-by-step launch system</span>
-      </div>
-      <div class="learn-item">
-        <span class="learn-check">&#10003;</span>
-        <span class="learn-text">Cold calling scripts that actually close</span>
-      </div>
-      <div class="learn-item">
-        <span class="learn-check">&#10003;</span>
-        <span class="learn-text">17 no-code AI tools breakdown</span>
-      </div>
-      <div class="learn-item">
-        <span class="learn-check">&#10003;</span>
-        <span class="learn-text">Find clients on Google Maps method</span>
-      </div>
-      <div class="learn-item">
-        <span class="learn-check">&#10003;</span>
-        <span class="learn-text">Pricing & recurring revenue models</span>
-      </div>
-      <div class="learn-item">
-        <span class="learn-check">&#10003;</span>
-        <span class="learn-text">AI-powered study assistant (24/7)</span>
-      </div>
-      <div class="learn-item">
-        <span class="learn-check">&#10003;</span>
-        <span class="learn-text">3D immersive learning experience</span>
-      </div>
-      <div class="learn-item">
-        <span class="learn-check">&#10003;</span>
-        <span class="learn-text">Forever updates & new content</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- OFFER -->
-<section id="offer" class="offer-section">
-  <div class="section-inner">
-    <div class="section-badge">The Offer</div>
-    <h2 class="section-title">One Payment. Infinite Access.</h2>
-    <div class="divider-line" style="margin:30px auto"></div>
-    <p class="section-desc" style="text-align:center;margin:0 auto 10px">Everything above. All four products. No recurring fees. No upsells.</p>
-    <div class="offer-box">
-      <div class="offer-was">$200+</div>
-      <div class="offer-price">$27</div>
-      <p class="offer-note">One-time payment &bull; Lifetime access &bull; All future updates</p>
-      <div id="paypal-button-container"></div>
-      <div class="offer-trust">
-        <span class="trust-item">&#10003; Instant Access</span>
-        <span class="trust-item">&#10003; 30-Day Guarantee</span>
-        <span class="trust-item">&#10003; Secure Checkout</span>
-        <span class="trust-item">&#10003; Zero Subscriptions</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
 <footer>
-  <a href="#" class="nav-brand">CAELUM</a>
-  <p>Heaven &bull; The Void Above All</p>
+  <div class="footer-logo">CAELUM</div>
+  <div class="footer-tagline">Heaven • The Void Above All</div>
+  <p>© 2026 Caelum. Built by the clan, for the clan.</p>
+  <p style="margin-top:0.5rem">Free forever. Rise together.</p>
 </footer>
 
-<!-- HIDDEN LINKS -->
-<a href="test-mode.html" class="test-link">TEST</a>
-<a href="admin.html" class="admin-link">ADMIN</a>
-
-<!-- PAYPAL -->
-<script src="https://www.paypal.com/sdk/js?client-id=AUe6X3A9mZ1YVWp1BaH7x-H1-bU8SWuJkMrwfLFGCqowbVpapnS2Vqh8KopqeRhu3gtsdhaqGNkHnBiF&currency=USD"></script>
-<script>
-if(localStorage.getItem('blueprint-access-code')){window.location.href='dashboard.html'}
-paypal.Buttons({
-  style:{layout:'vertical',color:'gold',shape:'rect',label:'pay',height:45},
-  createOrder:function(data,actions){
-    return actions.order.create({purchase_units:[{amount:{value:'27.00'},description:'CAELUM — AI Agency Blueprint (Lifetime Access)'}]})
-  },
-  onApprove:function(data,actions){
-    return actions.order.capture().then(function(orderData){
-      const accessCode='CAELUM-'+Date.now()+'-'+Math.random().toString(36).substr(2,9);
-      const purchase={accessCode:accessCode,timestamp:new Date().toISOString(),paypalOrderId:orderData.id,status:'completed'};
-      localStorage.setItem('blueprint-access-code',accessCode);
-      let purchases=JSON.parse(localStorage.getItem('blueprint-purchases')||'[]');
-      purchases.push(purchase);
-      localStorage.setItem('blueprint-purchases',JSON.stringify(purchases));
-      window.location.href='dashboard.html'
-    })
-  },
-  onError:function(err){alert('Payment error. Please try again.');console.error(err)}
-}).render('#paypal-button-container');
-</script>
-
-<!-- STARS -->
-<script>
-const c=document.getElementById('stars'),ctx=c.getContext('2d');let W,H,stars=[];
-function init(){W=c.width=innerWidth;H=c.height=innerHeight;stars=[];for(let i=0;i<300;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.2+0.2,o:Math.random()*0.4+0.05,s:Math.random()*0.0003+0.0001})}
-function draw(){ctx.clearRect(0,0,W,H);stars.forEach(s=>{s.o+=s.s;if(s.o>0.5||s.o<0.05)s.s*=-1;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(212,168,67,${s.o})`;ctx.fill()});requestAnimationFrame(draw)}
-addEventListener('resize',init);init();draw();
-</script>
-
-<!-- NAV SCROLL + SECTION REVEALS -->
-<script>
-const nav=document.getElementById('navbar');
-addEventListener('scroll',()=>{nav.classList.toggle('scrolled',scrollY>60)});
-
-// Reveal sections on scroll
-const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)'}})},{threshold:0.1,rootMargin:'0px 0px -60px 0px'});
-document.querySelectorAll('section').forEach(s=>{s.style.opacity='0';s.style.transform='translateY(40px)';s.style.transition='all 0.8s cubic-bezier(0.16,1,0.3,1)';observer.observe(s)});
-</script>
 </body>
 </html>
