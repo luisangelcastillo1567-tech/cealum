@@ -1,165 +1,494 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Agency Blueprint — CAELUM</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Blueprint — CAELUM</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
-  *{margin:0;padding:0;box-sizing:border-box}
-  body{background:#080a0f;color:#c9b97a;font-family:'EB Garamond',serif;min-height:100vh;overflow-x:hidden}
-  canvas#stars{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
-  .wrap{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:60px 24px 100px}
-  .badge{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.3em;color:#6b5a2a;text-transform:uppercase;margin-bottom:24px}
-  h1{font-family:'Cinzel Decorative',serif;font-size:clamp(2rem,5vw,3.2rem);color:#d4a843;line-height:1.15;margin-bottom:16px;text-shadow:0 0 40px rgba(212,168,67,0.15)}
-  .tagline{font-size:1.2rem;color:#8a7a5a;font-style:italic;margin-bottom:48px;line-height:1.6}
-  .divider{width:80px;height:1px;background:linear-gradient(90deg,transparent,#d4a843,transparent);margin:40px 0}
-  h2{font-family:'Cinzel',serif;font-size:1.1rem;letter-spacing:0.15em;color:#d4a843;text-transform:uppercase;margin-bottom:20px}
-  .module{border:1px solid #1e1a10;background:rgba(212,168,67,0.03);border-radius:4px;padding:28px 32px;margin-bottom:20px}
-  .module-num{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.3em;color:#6b5a2a;margin-bottom:8px}
-  .module-title{font-family:'Cinzel',serif;font-size:1rem;color:#c9b97a;margin-bottom:12px}
-  .module p{font-size:1rem;color:#7a6e58;line-height:1.8;margin-bottom:12px}
-  .module p:last-child{margin-bottom:0}
-  .lesson{padding:10px 0;border-bottom:1px solid #1a1508;font-size:0.95rem;color:#8a7a5a;display:flex;gap:12px}
-  .lesson:last-child{border-bottom:none}
-  .lesson-num{color:#4a3e20;font-family:'Cinzel',serif;font-size:11px;min-width:28px}
-  .tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-top:16px}
-  .tool-card{border:1px solid #1e1a10;background:rgba(212,168,67,0.02);border-radius:4px;padding:16px}
-  .tool-name{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.1em;color:#c9b97a;margin-bottom:4px}
-  .tool-use{font-size:0.85rem;color:#5a5040;line-height:1.5}
-  .script-block{background:#06080d;border-left:2px solid #d4a843;padding:20px 24px;margin:12px 0;border-radius:0 4px 4px 0}
-  .script-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;color:#6b5a2a;margin-bottom:10px}
-  .script-block p{font-size:0.95rem;color:#8a7a5a;line-height:1.8;font-style:italic}
-  .price-table{width:100%;border-collapse:collapse;margin-top:16px}
-  .price-table th{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.15em;color:#6b5a2a;text-align:left;padding:10px 0;border-bottom:1px solid #1e1a10}
-  .price-table td{padding:12px 0;border-bottom:1px solid #0e0c08;font-size:0.95rem;color:#7a6e58;vertical-align:top}
-  .price-table td:first-child{color:#c9b97a;font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.05em;width:35%}
-  .gold{color:#d4a843}
-  .back-link{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.2em;color:#4a3e20;text-decoration:none;display:inline-block;margin-bottom:48px;text-transform:uppercase}
-  .back-link:hover{color:#d4a843}
-  .seal{text-align:center;padding:48px 0 0;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.3em;color:#2a2418;text-transform:uppercase}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --void:#05040e;--deep:#0a0818;--surface:#0f0c1e;--card:#13102a;--card2:#1a1535;
+  --border:rgba(127,119,221,0.15);--border2:rgba(127,119,221,0.3);
+  --purple:#534AB7;--purple-light:#7F77DD;--purple-pale:#AFA9EC;
+  --teal:#1D9E75;--teal-light:#5DCAA5;--coral:#D85A30;
+  --text:#f0eeff;--muted:#9990cc;--dim:#443d66;--gold:#c9a84c;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--void);color:var(--text);overflow-x:hidden;line-height:1.6}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--void)}
+::-webkit-scrollbar-thumb{background:var(--purple);border-radius:2px}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.25rem 2.5rem;background:rgba(5,4,14,0.9);backdrop-filter:blur(20px);border-bottom:0.5px solid var(--border)}
+.nav-logo{font-size:1.1rem;font-weight:900;letter-spacing:0.15em;background:linear-gradient(135deg,#AFA9EC,#5DCAA5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none}
+.nav-back{font-size:0.8rem;font-weight:600;color:var(--muted);text-decoration:none;display:flex;align-items:center;gap:6px;transition:color 0.2s}
+.nav-back:hover{color:var(--text)}
+.blueprint-hero{padding:8rem 2rem 4rem;max-width:900px;margin:0 auto;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(83,74,183,0.12);border:0.5px solid var(--border2);color:var(--purple-pale);font-size:0.72rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:0.5rem 1.25rem;border-radius:24px;margin-bottom:2rem}
+.hero-title{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:900;letter-spacing:-0.04em;line-height:0.95;margin-bottom:1.25rem}
+.hero-title span{background:linear-gradient(135deg,#f0eeff,#AFA9EC,#5DCAA5);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:1.05rem;color:var(--muted);max-width:540px;margin:0 auto 2.5rem;line-height:1.8}
+.tabs-nav{display:flex;gap:0.5rem;max-width:900px;margin:0 auto 2.5rem;padding:0 2rem;flex-wrap:wrap}
+.tab-btn{padding:0.65rem 1.4rem;border-radius:8px;font-size:0.82rem;font-weight:700;letter-spacing:0.04em;border:0.5px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif}
+.tab-btn:hover{border-color:var(--border2);color:var(--text)}
+.tab-btn.active{background:linear-gradient(135deg,var(--purple),var(--purple-light));color:#fff;border-color:transparent}
+.module-pane{display:none;max-width:900px;margin:0 auto;padding:0 2rem 6rem}
+.module-pane.active{display:block}
+.module-header{background:var(--card);border:0.5px solid var(--border2);border-radius:20px;padding:2.5rem;margin-bottom:2.5rem;position:relative;overflow:hidden}
+.module-header::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--purple),var(--teal))}
+.mod-number{font-size:0.7rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal-light);margin-bottom:0.5rem}
+.mod-title{font-size:clamp(1.75rem,4vw,2.5rem);font-weight:900;letter-spacing:-0.03em;margin-bottom:0.75rem}
+.mod-intro{font-size:1rem;color:var(--muted);line-height:1.8;max-width:640px}
+.mod-time{display:inline-flex;align-items:center;gap:6px;font-size:0.75rem;font-weight:600;color:var(--purple-pale);margin-top:1.25rem;background:rgba(83,74,183,0.1);padding:0.4rem 1rem;border-radius:20px}
+.content-block{margin-bottom:2.5rem}
+.block-label{font-size:0.68rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal-light);margin-bottom:0.75rem}
+.block-heading{font-size:1.3rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:0.75rem}
+.block-body{font-size:0.95rem;color:var(--muted);line-height:1.85}
+.block-body p{margin-bottom:1rem}
+.block-body strong{color:var(--text);font-weight:600}
+.callout{border-radius:14px;padding:1.5rem;margin:1.5rem 0}
+.callout-key{background:rgba(83,74,183,0.08);border:0.5px solid var(--border2)}
+.callout-action{background:rgba(29,158,117,0.08);border:0.5px solid rgba(93,202,165,0.3)}
+.callout-warning{background:rgba(216,90,48,0.08);border:0.5px solid rgba(216,90,48,0.25)}
+.callout-label{font-size:0.65rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.6rem}
+.callout-key .callout-label{color:var(--purple-pale)}
+.callout-action .callout-label{color:var(--teal-light)}
+.callout-warning .callout-label{color:#E8825A}
+.callout p{font-size:0.9rem;color:var(--text);line-height:1.75}
+.script-box{background:var(--deep);border:0.5px solid var(--border2);border-radius:14px;padding:1.75rem;margin:1.5rem 0}
+.script-label{font-size:0.65rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+.script-line{font-size:0.9rem;line-height:1.9;color:var(--text)}
+.script-line .you{color:var(--teal-light);font-weight:600}
+.script-line .them{color:var(--purple-pale);font-weight:600}
+.script-line .note{font-size:0.8rem;color:var(--muted);font-style:italic}
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:0.85rem;margin:1.5rem 0}
+.tool-card{background:var(--card);border:0.5px solid var(--border);border-radius:12px;padding:1.25rem;transition:border-color 0.2s}
+.tool-card:hover{border-color:var(--border2)}
+.tool-name{font-size:0.9rem;font-weight:700;margin-bottom:0.25rem}
+.tool-cat{font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--purple-pale);margin-bottom:0.5rem}
+.tool-desc{font-size:0.8rem;color:var(--muted);line-height:1.6}
+.tool-price{font-size:0.72rem;font-weight:600;color:var(--teal-light);margin-top:0.5rem}
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin:1.5rem 0}
+.pricing-card{background:var(--card);border:0.5px solid var(--border);border-radius:16px;padding:2rem;position:relative;overflow:hidden}
+.pricing-card.featured{border-color:var(--purple-light)}
+.pricing-card.featured::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--purple),var(--teal))}
+.pricing-tier{font-size:0.68rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--purple-pale);margin-bottom:0.75rem}
+.pricing-price{font-size:2.25rem;font-weight:900;letter-spacing:-0.04em;margin-bottom:0.25rem}
+.pricing-period{font-size:0.8rem;color:var(--muted);margin-bottom:1.25rem}
+.pricing-feature{font-size:0.82rem;color:var(--muted);padding:0.4rem 0;border-bottom:0.5px solid var(--border);display:flex;align-items:flex-start;gap:8px}
+.pricing-feature:last-of-type{border-bottom:none}
+.pricing-feature::before{content:'✓';color:var(--teal-light);font-weight:700;flex-shrink:0;margin-top:1px}
+.action-steps{background:var(--card);border:0.5px solid var(--border2);border-radius:16px;padding:2rem;margin-top:2.5rem}
+.action-steps-title{font-size:1rem;font-weight:800;margin-bottom:1.5rem;color:var(--teal-light)}
+.action-step{display:flex;gap:1rem;padding:1rem 0;border-bottom:0.5px solid var(--border)}
+.action-step:last-child{border-bottom:none}
+.action-num{width:28px;height:28px;background:rgba(83,74,183,0.2);border:0.5px solid var(--border2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;color:var(--purple-pale);flex-shrink:0}
+.action-text{font-size:0.88rem;color:var(--text);line-height:1.7}
+.action-text strong{color:var(--teal-light)}
+.module-nav{display:flex;justify-content:space-between;align-items:center;margin-top:3rem;padding-top:2rem;border-top:0.5px solid var(--border)}
+.mod-nav-btn{display:inline-flex;align-items:center;gap:8px;font-size:0.85rem;font-weight:700;padding:0.75rem 1.5rem;border-radius:8px;border:0.5px solid var(--border2);background:transparent;color:var(--text);cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif;text-decoration:none}
+.mod-nav-btn:hover{background:rgba(83,74,183,0.1);border-color:var(--purple-light)}
+.mod-nav-btn.primary{background:linear-gradient(135deg,var(--purple),var(--purple-light));border:none;color:#fff}
+.mod-nav-btn.primary:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(83,74,183,0.3)}
+@media(max-width:768px){nav{padding:1rem 1.25rem}.module-pane{padding:0 1.25rem 4rem}.tabs-nav{padding:0 1.25rem}.blueprint-hero{padding:7rem 1.25rem 3rem}}
 </style>
 </head>
 <body>
-<canvas id="stars"></canvas>
-<div class="wrap">
-  <a class="back-link" href="index.html">← Return to CAELUM</a>
-  <div class="badge">— Sovereign Program · $27 —</div>
-  <h1>AI Agency Blueprint</h1>
-  <p class="tagline">The complete system to launch a profitable AI agency in 30 days.<br>No code. No experience. No excuses.</p>
-  <div class="divider"></div>
-  <h2>What You Now Possess</h2>
-  <p style="color:#7a6e58;line-height:1.8;margin-bottom:32px">This is not a motivational document. This is an operational system — built for the person who is done waiting and ready to move. Work through each module in order. Everything you need is here.</p>
-  <!-- MODULE 1 -->
-  <div class="module">
-    <div class="module-num">MODULE 01 OF 04</div>
-    <div class="module-title">The Foundation — Understanding AI Agency Work</div>
-    <p>An AI agency sells AI-powered services to businesses that have problems they don't know how to solve with technology. You are the bridge. You don't need to build AI — you need to know which tools solve which problems, and how to package that as a service.</p>
-    <p>The most in-demand AI services right now are: automated customer follow-up, content creation pipelines, chatbot installation, lead generation automation, and social media scheduling. Any small business can benefit from these. Most don't have them yet.</p>
-    <div class="divider" style="width:40px;margin:20px 0"></div>
-    <h2 style="font-size:0.9rem;margin-bottom:12px">Lessons</h2>
-    <div class="lesson"><span class="lesson-num">1.1</span><span>What an AI agency actually is — and why it's the best business to start in 2025 with no money and no degree</span></div>
-    <div class="lesson"><span class="lesson-num">1.2</span><span>The 5 most profitable AI services you can sell starting this week (with zero technical skills)</span></div>
-    <div class="lesson"><span class="lesson-num">1.3</span><span>Who your ideal client is — small businesses with $10k–$500k/year revenue, no tech team, and real problems</span></div>
-    <div class="lesson"><span class="lesson-num">1.4</span><span>How to position yourself as an expert even if you started learning AI yesterday — the credibility framework</span></div>
-  </div>
-  <!-- MODULE 2 -->
-  <div class="module">
-    <div class="module-num">MODULE 02 OF 04</div>
-    <div class="module-title">Finding Clients — The Google Maps Method</div>
-    <p>You do not need a following. You do not need ads. You need a phone and Google Maps. Local businesses — restaurants, salons, contractors, real estate agents, gyms, law offices — are actively losing money every day because they lack basic digital systems. You are going to fix that for them.</p>
-    <div class="divider" style="width:40px;margin:20px 0"></div>
-    <h2 style="font-size:0.9rem;margin-bottom:12px">The Prospecting Process</h2>
-    <div class="lesson"><span class="lesson-num">2.1</span><span>Open Google Maps. Search any business type in your city (e.g. "plumbers Las Vegas"). Filter to businesses with under 50 reviews. These are small operations — exactly your target.</span></div>
-    <div class="lesson"><span class="lesson-num">2.2</span><span>Check each business: do they have a website? Is it mobile-friendly? Do they have a Google Business profile? Missing any of these = your opening.</span></div>
-    <div class="lesson"><span class="lesson-num">2.3</span><span>Write down: business name, phone number, what's missing. Build a list of 20 per day. That's your pipeline.</span></div>
-    <div class="lesson"><span class="lesson-num">2.4</span><span>Call them. Use the script below. Your goal on the first call is not to sell — it's to schedule a 15-minute discovery call.</span></div>
-    <div class="divider" style="width:40px;margin:20px 0"></div>
-    <h2 style="font-size:0.9rem;margin-bottom:16px">Cold Call Script — First Contact</h2>
-    <div class="script-block">
-      <div class="script-label">Word for word — memorize this</div>
-      <p>"Hi, is this [Owner Name]? My name is [Your Name] — I'm a digital consultant based here in [City]. I was doing some research on local [business type] businesses and I noticed your [website is outdated / you don't have a website / your Google listing is incomplete]. I help businesses like yours fix that really quickly — usually within a week. I'm not trying to sell you anything on this call, I just wanted to see if it'd be worth a 15-minute conversation. Are you free sometime this week?"</p>
-    </div>
-    <div class="script-block">
-      <div class="script-label">If they ask "how much does it cost?"</div>
-      <p>"It really depends on what you need — that's exactly why I'd love the 15 minutes. Some clients pay $300, some pay $1,500. But I won't know until I understand your situation. Can we just get 15 minutes on the calendar first?"</p>
-    </div>
-    <div class="script-block">
-      <div class="script-label">If they say "I'm not interested"</div>
-      <p>"Totally understand. Can I ask — do you currently have a way to follow up with customers automatically after they visit? No pressure, I'm just curious." (This often opens the door to a real conversation.)</p>
-    </div>
-  </div>
-  <!-- MODULE 3 -->
-  <div class="module">
-    <div class="module-num">MODULE 03 OF 04</div>
-    <div class="module-title">Delivering the Work — The 17 No-Code AI Tools</div>
-    <p>You don't build anything from scratch. You use tools that already exist, configure them for your client's business, and charge for your time and expertise. These are the 17 tools that cover 95% of what any AI agency will ever need to deliver.</p>
-    <div class="divider" style="width:40px;margin:20px 0"></div>
-    <div class="tools-grid">
-      <div class="tool-card"><div class="tool-name">ChatGPT / Claude</div><div class="tool-use">Content creation, email drafting, customer Q&A scripts</div></div>
-      <div class="tool-card"><div class="tool-name">Zapier</div><div class="tool-use">Automate workflows between apps — no code required</div></div>
-      <div class="tool-card"><div class="tool-name">Make.com</div><div class="tool-use">Advanced automation, more flexible than Zapier</div></div>
-      <div class="tool-card"><div class="tool-name">Manychat</div><div class="tool-use">Instagram + Facebook DM automation and lead capture</div></div>
-      <div class="tool-card"><div class="tool-name">Tidio</div><div class="tool-use">AI chatbot for any website — installs in 5 minutes</div></div>
-      <div class="tool-card"><div class="tool-name">GHL (GoHighLevel)</div><div class="tool-use">All-in-one CRM, funnels, and follow-up automation</div></div>
-      <div class="tool-card"><div class="tool-name">Notion AI</div><div class="tool-use">Client documentation, SOPs, and knowledge bases</div></div>
-      <div class="tool-card"><div class="tool-name">Canva AI</div><div class="tool-use">Social media content, thumbnails, marketing materials</div></div>
-      <div class="tool-card"><div class="tool-name">ElevenLabs</div><div class="tool-use">AI voiceovers for client video content</div></div>
-      <div class="tool-card"><div class="tool-name">HeyGen</div><div class="tool-use">AI video avatars for client marketing</div></div>
-      <div class="tool-card"><div class="tool-name">Typeform + AI</div><div class="tool-use">Smart intake forms and client onboarding flows</div></div>
-      <div class="tool-card"><div class="tool-name">Calendly</div><div class="tool-use">Automated booking — eliminate phone tag forever</div></div>
-      <div class="tool-card"><div class="tool-name">Buffer / Later</div><div class="tool-use">Schedule a month of social posts in one sitting</div></div>
-      <div class="tool-card"><div class="tool-name">Loom AI</div><div class="tool-use">Record client tutorials and walkthroughs fast</div></div>
-      <div class="tool-card"><div class="tool-name">Airtable AI</div><div class="tool-use">Client databases, project tracking, reporting</div></div>
-      <div class="tool-card"><div class="tool-name">Synthesia</div><div class="tool-use">Training videos and explainers without a camera</div></div>
-      <div class="tool-card"><div class="tool-name">Webflow / Carrd</div><div class="tool-use">Build fast, beautiful websites for local clients</div></div>
-    </div>
-    <div class="divider" style="width:40px;margin:20px 0"></div>
-    <h2 style="font-size:0.9rem;margin-bottom:12px">How to Package Services</h2>
-    <div class="lesson"><span class="lesson-num">3.1</span><span>Starter Package ($300–$500): Google Business Profile setup + basic website + 1 month social content</span></div>
-    <div class="lesson"><span class="lesson-num">3.2</span><span>Growth Package ($800–$1,200): Everything above + chatbot installation + automated follow-up sequence</span></div>
-    <div class="lesson"><span class="lesson-num">3.3</span><span>Sovereign Package ($1,500–$2,500): Full AI systems build — CRM, automations, content pipeline, monthly retainer option</span></div>
-  </div>
-  <!-- MODULE 4 -->
-  <div class="module">
-    <div class="module-num">MODULE 04 OF 04</div>
-    <div class="module-title">Getting Paid — Pricing, Contracts & Recurring Revenue</div>
-    <p>The goal is not one-time payments. The goal is recurring revenue — clients who pay you every month on autopilot. This is how you build something real.</p>
-    <div class="divider" style="width:40px;margin:20px 0"></div>
-    <h2 style="font-size:0.9rem;margin-bottom:12px">What to Charge</h2>
-    <table class="price-table">
-      <thead><tr><th>Service</th><th>One-Time</th><th>Monthly Retainer</th></tr></thead>
-      <tbody>
-        <tr><td>Website build</td><td class="gold">$400–$1,500</td><td>$100–$200/mo (hosting + updates)</td></tr>
-        <tr><td>Chatbot setup</td><td class="gold">$300–$800</td><td>$150–$300/mo (maintenance)</td></tr>
-        <tr><td>Social content</td><td class="gold">$200–$500 setup</td><td>$300–$800/mo (ongoing posts)</td></tr>
-        <tr><td>Automation build</td><td class="gold">$500–$1,500</td><td>$200–$400/mo (monitoring)</td></tr>
-        <tr><td>Full AI system</td><td class="gold">$1,500–$3,000</td><td>$500–$1,500/mo</td></tr>
-      </tbody>
-    </table>
-    <div class="divider" style="width:40px;margin:20px 0"></div>
-    <h2 style="font-size:0.9rem;margin-bottom:12px">Protecting Yourself</h2>
-    <div class="lesson"><span class="lesson-num">4.1</span><span>Always collect 50% deposit before starting any work. Non-negotiable. Use PayPal Invoices or Stripe.</span></div>
-    <div class="lesson"><span class="lesson-num">4.2</span><span>Use a simple 1-page contract. At minimum cover: scope of work, payment terms, revision limits (max 2 rounds), and ownership rights.</span></div>
-    <div class="lesson"><span class="lesson-num">4.3</span><span>For retainer clients, charge on the 1st of each month. Use recurring PayPal billing or Stripe subscriptions. Never chase payments manually.</span></div>
-    <div class="lesson"><span class="lesson-num">4.4</span><span>Your 30-day goal: 3 clients paying $300–$500 each = $900–$1,500. That's your proof of concept. Everything scales from there.</span></div>
-  </div>
-  <!-- BONUS -->
-  <div class="module" style="border-color:#2a2010">
-    <div class="module-num" style="color:#d4a843">— BONUS —</div>
-    <div class="module-title" style="color:#d4a843">The Sovereign Operator Mindset</div>
-    <p>Most people who buy courses like this do nothing with them. Not because the information is wrong — but because they treat information as a destination. It isn't. Information is a weapon. It only has value when you use it.</p>
-    <p>The sovereign operator does not wait until they feel ready. They are never ready. They act anyway. They call the business. They send the message. They build the thing. Imperfect action beats perfect inaction every single time.</p>
-    <p style="color:#d4a843;font-family:'Cinzel',serif;font-size:0.85rem;letter-spacing:0.1em;margin-top:20px">Your assignment: make one cold call today. Not tomorrow. Today.</p>
-  </div>
-  <div class="divider"></div>
-  <div class="seal">CAELUM · AI Agency Blueprint · Sovereign Edition</div>
+
+<nav>
+  <a href="/" class="nav-logo">CAELUM</a>
+  <a href="/welcome.html" class="nav-back">← Back to Dashboard</a>
+</nav>
+
+<div class="blueprint-hero">
+  <div class="hero-badge">📘 Product I</div>
+  <h1 class="hero-title"><span>The Blueprint</span></h1>
+  <p class="hero-sub">Your complete 4-module launch system. Built for absolute beginners. Read in order — each module feeds directly into the next.</p>
 </div>
+
+<div class="tabs-nav">
+  <button class="tab-btn active" onclick="showModule(1)">Module 1 — Foundation</button>
+  <button class="tab-btn" onclick="showModule(2)">Module 2 — Client Acquisition</button>
+  <button class="tab-btn" onclick="showModule(3)">Module 3 — The AI Stack</button>
+  <button class="tab-btn" onclick="showModule(4)">Module 4 — Revenue &amp; Scale</button>
+</div>
+
+<!-- MODULE 1 -->
+<div class="module-pane active" id="mod1">
+  <div class="module-header">
+    <div class="mod-number">Module 1 of 4</div>
+    <div class="mod-title">The Foundation</div>
+    <p class="mod-intro">You're about to understand exactly what an AI agency is, why the moment is now, and how to position yourself as an expert before you have a single client — or a single dollar.</p>
+    <div class="mod-time">⏱ 20 min read · Complete before Module 2</div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-label">What You're Actually Building</div>
+    <div class="block-heading">An AI Agency Is Not What You Think</div>
+    <div class="block-body">
+      <p>Most people hear "AI agency" and picture a tech startup with coders and investors. That's not what you're building. An AI agency, in the Caelum model, is <strong>a one-person service business that uses AI tools to deliver results that used to require an entire team.</strong></p>
+      <p>Your clients don't care about the tools. They don't want AI. They want outcomes: more customers walking through their door, more time back in their day, a website that doesn't embarrass them, content that actually gets attention. You deliver those outcomes. AI is just how you do it efficiently.</p>
+      <p>Think of yourself as a contractor who's discovered a machine that does in 2 hours what used to take 20. You charge for the result, not the hours. The machine is your competitive advantage.</p>
+    </div>
+    <div class="callout callout-key">
+      <div class="callout-label">🔑 Core Insight</div>
+      <p>Local businesses in your city are paying agencies $1,000–$5,000/month right now for services you can deliver with tools that cost under $100/month. The gap between what they pay and what it costs you is your profit margin.</p>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-label">The Timing</div>
+    <div class="block-heading">Why 2026 Is the Window — And It Won't Stay Open</div>
+    <div class="block-body">
+      <p>Two years ago, delivering a professional AI-generated video ad required a production team. Today one person with the right tools can produce it in 90 minutes. <strong>The tools democratized; the prices clients pay haven't moved yet.</strong></p>
+      <p>Right now there is a massive gap between what small businesses know they need and what they can afford from traditional agencies. You close that gap. You offer the same output at a fraction of the cost — because your overhead is near zero.</p>
+      <p>This window closes as more people figure it out. The ones who start now build the reputation, the case studies, and the recurring clients before the market gets crowded.</p>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-label">Niche Selection</div>
+    <div class="block-heading">Pick One Type of Business. Own That Niche.</div>
+    <div class="block-body">
+      <p>The fastest path to your first client is extreme specificity. Don't say "I help businesses with AI." Say "I help dentists in [your city] get 15 new patient inquiries per month using automated social media and Google review systems."</p>
+      <p>The best niches share these traits: <strong>high pain around getting new customers, limited tech knowledge in-house, recurring need, cash flow to pay for services.</strong></p>
+    </div>
+    <div class="callout callout-action">
+      <div class="callout-label">✦ Top Starter Niches</div>
+      <p><strong>Dentists &amp; Clinics</strong> — Need review management, new patient ads, appointment reminders<br/>
+      <strong>Real Estate Agents</strong> — Need listing content, social media, lead follow-up automation<br/>
+      <strong>Restaurants &amp; Cafés</strong> — Need social content, Google profile management, promotion graphics<br/>
+      <strong>Hair Salons &amp; Spas</strong> — Need booking reminders, before/after content, social posting<br/>
+      <strong>Local Contractors</strong> — Need website, Google reviews, before/after project content</p>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-label">Your Positioning</div>
+    <div class="block-heading">How to Sound Like an Expert Before You Are One</div>
+    <div class="block-body">
+      <p>Expertise is positioning, not just experience. Your positioning statement should follow this formula: <strong>"I help [niche] in [location] get [specific result] without [their main frustration]."</strong></p>
+    </div>
+    <div class="callout callout-key">
+      <div class="callout-label">📝 Example Positioning Statements</div>
+      <p>"I help dentists in Miami get 10–20 new patient inquiries a month from Google and social — without paying agency prices."<br/><br/>
+      "I help real estate agents in Houston look like a brand on social media with zero time investment — I handle everything."<br/><br/>
+      "I help restaurants in Austin fill tables on slow nights using targeted local ads for under $300/month total."</p>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-label">The Mindset</div>
+    <div class="block-heading">You Don't Need to Know Everything. You Need to Start.</div>
+    <div class="block-body">
+      <p>The biggest barrier isn't skill. It's the feeling that you need to know more before you reach out. You don't. Your first client will teach you more than any course. <strong>Done beats perfect. Always.</strong></p>
+    </div>
+  </div>
+
+  <div class="action-steps">
+    <div class="action-steps-title">✦ Module 1 Action Steps — Do These Before Moving On</div>
+    <div class="action-step"><div class="action-num">1</div><div class="action-text"><strong>Pick your niche.</strong> Choose one type of local business. Write it down: "I work with _______________."</div></div>
+    <div class="action-step"><div class="action-num">2</div><div class="action-text"><strong>Write your positioning statement.</strong> Fill in the formula above. Write it in your notes right now.</div></div>
+    <div class="action-step"><div class="action-num">3</div><div class="action-text"><strong>Name 3 businesses in your niche in your city.</strong> Find them on Google Maps. You'll contact them in Module 2.</div></div>
+  </div>
+
+  <div class="module-nav">
+    <span></span>
+    <button class="mod-nav-btn primary" onclick="showModule(2)">Module 2 — Client Acquisition →</button>
+  </div>
+</div>
+
+<!-- MODULE 2 -->
+<div class="module-pane" id="mod2">
+  <div class="module-header">
+    <div class="mod-number">Module 2 of 4</div>
+    <div class="mod-title">Client Acquisition</div>
+    <p class="mod-intro">The Google Maps method to find unlimited leads. Word-for-word cold call scripts. Email outreach that gets replies. How to close on the first call.</p>
+    <div class="mod-time">⏱ 25 min read · Contains scripts — study before calling</div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-label">Lead Generation</div>
+    <div class="block-heading">The Google Maps Method — 100 Leads in 60 Minutes</div>
+    <div class="block-body">
+      <p>Open Google Maps. Search your niche + your city. Example: "dentist Miami." Look for businesses showing pain signals — these are who need you most and will pay fastest.</p>
+    </div>
+    <div class="callout callout-key">
+      <div class="callout-label">🎯 Pain Signals to Look For</div>
+      <p><strong>Under 20 Google reviews</strong> — they're not getting found<br/>
+      <strong>Last review was 6+ months ago</strong> — no one is managing their reputation<br/>
+      <strong>No website or a website that looks like 2012</strong> — obvious need<br/>
+      <strong>Photos are low quality or missing</strong> — their first impression is hurting them<br/>
+      <strong>No social media presence</strong> — entire audience untouched</p>
+    </div>
+    <div class="block-body">
+      <p>For each business write down: <strong>Name, phone number, and 1–2 specific problems you spotted.</strong> The specific problems are what make your cold call powerful — you're solving something they already know is wrong.</p>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-label">Cold Calling</div>
+    <div class="block-heading">The Exact Script — Word For Word</div>
+    <div class="block-body">
+      <p>The goal of the cold call is NOT to close the sale. The goal is to <strong>book a discovery call.</strong> One goal. One win.</p>
+    </div>
+    <div class="script-box">
+      <div class="script-label">📞 Opening Script</div>
+      <div class="script-line">
+        <span class="you">YOU:</span> "Hey, is this [Business Name]? Great — is the owner around by any chance?"<br/><br/>
+        <span class="note">[If they ask who's calling:]</span><br/>
+        <span class="you">YOU:</span> "Yeah it's [Your Name] — I run a local marketing service, I had a quick question about their Google profile."<br/><br/>
+        <span class="them">OWNER:</span> "Yeah this is them, what's up?"<br/><br/>
+        <span class="you">YOU:</span> "Hey [Name], I was looking up [niche] businesses in [city] earlier and I pulled up your profile — I noticed you only have [X] reviews, and most of your competitors are sitting around [higher number]. That gap is usually costing businesses like yours new customers every week who just pick whoever shows up first. Does that feel like something that's been on your radar at all?"
+      </div>
+    </div>
+    <div class="script-box">
+      <div class="script-label">🔄 Handling The Top 3 Objections</div>
+      <div class="script-line">
+        <span class="them">THEM:</span> "I'm not interested."<br/>
+        <span class="you">YOU:</span> "Totally fair — I'm not trying to sell you anything today. I just wanted to see if the problem was real for you. If you ever want to see what we've done for similar businesses in [city], I can send something over — no pressure."<br/><br/>
+        <span class="them">THEM:</span> "I already have someone handling my marketing."<br/>
+        <span class="you">YOU:</span> "That's great — most businesses I work with already had someone, but there were specific gaps not being handled. Would you be open to a 10-minute call where I show you exactly what I'm seeing? If what you have covers it, I'll tell you honestly."<br/><br/>
+        <span class="them">THEM:</span> "How much does it cost?"<br/>
+        <span class="you">YOU:</span> "It depends on what you need — which is why I'd rather do a quick 10-minute call first. I don't want to quote you something that doesn't fit. When's a good time this week — morning or afternoon?"
+      </div>
+    </div>
+    <div class="script-box">
+      <div class="script-label">✅ Booking the Discovery Call</div>
+      <div class="script-line">
+        <span class="you">YOU:</span> "I'd love to show you exactly what I'm talking about — takes about 10 minutes. Would [Day] or [Day] work better for you?"<br/><br/>
+        <span class="note">[Always give two options. "Tuesday or Wednesday?" not "When are you free?" — specific options close faster.]</span><br/><br/>
+        <span class="them">THEM:</span> "Tuesday works."<br/>
+        <span class="you">YOU:</span> "Perfect. Morning or afternoon?"<br/>
+        <span class="them">THEM:</span> "Like 2pm."<br/>
+        <span class="you">YOU:</span> "Done. I'll send a confirmation — what's the best email?"
+      </div>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-label">Email Outreach</div>
+    <div class="block-heading">The Email Template That Gets Replies</div>
+    <div class="script-box">
+      <div class="script-label">📧 Cold Email Template</div>
+      <div class="script-line">
+        <strong>Subject: Quick question about [Business Name]'s Google presence</strong><br/><br/>
+        Hey [Name],<br/><br/>
+        I was looking up [niche] businesses in [city] today and noticed [Business Name] has [X] reviews — most of your competitors are closer to [Y].<br/><br/>
+        That gap typically costs businesses in your industry 15–30% of the calls they should be getting from Google searches.<br/><br/>
+        I help [niche] in [city] fix this — usually within 30–60 days. Would it be worth a 10-minute call to see if it applies to you?<br/><br/>
+        [Your Name]
+      </div>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-label">The Discovery Call</div>
+    <div class="block-heading">How to Run the 10-Minute Call That Closes</div>
+    <div class="callout callout-key">
+      <div class="callout-label">📋 Discovery Call Structure (10 minutes)</div>
+      <p>
+        <strong>Min 1–2:</strong> "I'll ask a few quick questions, show you what I found on your profile, and if it looks like a fit I'll tell you exactly how I'd fix it. Sound good?"<br/><br/>
+        <strong>Min 3–5:</strong> Ask 3 questions: "How are you getting most of your new customers right now?" / "What's your biggest frustration with that?" / "If you could fix one thing about your online presence this month, what would it be?"<br/><br/>
+        <strong>Min 6–8:</strong> Present problem + solution. "Based on what you told me, here's what I'm seeing and here's exactly what I'd do."<br/><br/>
+        <strong>Min 9–10:</strong> Close. "If this sounds right to you, I'd start with the [Growth] package at $[price]/month. We can get started this week — does that work?"
+      </p>
+    </div>
+  </div>
+
+  <div class="action-steps">
+    <div class="action-steps-title">✦ Module 2 Action Steps</div>
+    <div class="action-step"><div class="action-num">1</div><div class="action-text"><strong>Build a list of 20 businesses</strong> using Google Maps. Write name, phone, and 1–2 pain signals for each.</div></div>
+    <div class="action-step"><div class="action-num">2</div><div class="action-text"><strong>Read the cold call script out loud 5 times</strong> before you dial anyone. It should feel natural.</div></div>
+    <div class="action-step"><div class="action-num">3</div><div class="action-text"><strong>Make your first 5 calls.</strong> Don't wait until you feel ready. Post your results in the community.</div></div>
+    <div class="action-step"><div class="action-num">4</div><div class="action-text"><strong>Book at least one discovery call</strong> this week. The numbers work in your favor — keep going.</div></div>
+  </div>
+
+  <div class="module-nav">
+    <button class="mod-nav-btn" onclick="showModule(1)">← Module 1</button>
+    <button class="mod-nav-btn primary" onclick="showModule(3)">Module 3 — The AI Stack →</button>
+  </div>
+</div>
+
+<!-- MODULE 3 -->
+<div class="module-pane" id="mod3">
+  <div class="module-header">
+    <div class="mod-number">Module 3 of 4</div>
+    <div class="mod-title">The AI Stack</div>
+    <p class="mod-intro">17 no-code AI tools broken down. What each one does, when to use it, and how to package them into billable services — without writing a line of code.</p>
+    <div class="mod-time">⏱ 20 min read · Bookmark this — you'll come back to it</div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-label">How the Stack Works</div>
+    <div class="block-heading">You're the Operator. The Tools Do the Work.</div>
+    <div class="block-body">
+      <p>You don't need to build these tools. You need to know what they produce and how to present that output as a professional service. Each tool is like a specialist you access for $0–$30/month that used to cost $50–$200/hour as a freelancer.</p>
+      <p>Your job: <strong>combine the right tools into a package that solves a specific client problem — then charge for the outcome, not the tools.</strong></p>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-label">Content &amp; Copy</div>
+    <div class="block-heading">Writing, captions, ads, emails — all automated.</div>
+    <div class="tools-grid">
+      <div class="tool-card"><div class="tool-cat">Text / Copy</div><div class="tool-name">ChatGPT / Claude</div><div class="tool-desc">Write social captions, email campaigns, ad copy, blog posts, bios, website copy. Give it the client's brand voice and it matches it.</div><div class="tool-price">Free – $20/mo</div></div>
+      <div class="tool-card"><div class="tool-cat">Image Generation</div><div class="tool-name">Midjourney / DALL-E</div><div class="tool-desc">Create custom images, product mockups, ad visuals, social graphics. No design skills needed — describe what you want.</div><div class="tool-price">$10–$30/mo</div></div>
+      <div class="tool-card"><div class="tool-cat">Design</div><div class="tool-name">Canva</div><div class="tool-desc">Turn AI-generated images into professional branded posts, flyers, carousels, and ads. The AI features inside make it even faster.</div><div class="tool-price">Free – $15/mo</div></div>
+      <div class="tool-card"><div class="tool-cat">Video</div><div class="tool-name">CapCut / Runway</div><div class="tool-desc">Create short-form video content with AI captions, transitions, and effects. Runway generates video from text. CapCut is fastest for social edits.</div><div class="tool-price">Free – $15/mo</div></div>
+      <div class="tool-card"><div class="tool-cat">Voiceover</div><div class="tool-name">ElevenLabs</div><div class="tool-desc">Generate professional voiceovers for ads, explainer videos, and reels. Sounds completely human. Clone a voice or use premade options.</div><div class="tool-price">Free – $22/mo</div></div>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-label">Automation &amp; Systems</div>
+    <div class="block-heading">Set it up once. It runs forever.</div>
+    <div class="tools-grid">
+      <div class="tool-card"><div class="tool-cat">Automation</div><div class="tool-name">Zapier / Make.com</div><div class="tool-desc">Connect any two apps without code. Auto-send review requests, post content, follow up leads, send invoices. The backbone of delivery.</div><div class="tool-price">Free – $20/mo</div></div>
+      <div class="tool-card"><div class="tool-cat">Chatbot</div><div class="tool-name">ManyChat</div><div class="tool-desc">Build Instagram and Facebook DM automations. Viewers reply with a keyword, they get an automated offer or booking link.</div><div class="tool-price">Free – $15/mo</div></div>
+      <div class="tool-card"><div class="tool-cat">AI Agent</div><div class="tool-name">Voiceflow</div><div class="tool-desc">Build custom AI chatbots for client websites. Answering FAQs, booking appointments, qualifying leads. No coding. Massive perceived value.</div><div class="tool-price">Free – $50/mo</div></div>
+      <div class="tool-card"><div class="tool-cat">Social Scheduling</div><div class="tool-name">Buffer / Later</div><div class="tool-desc">Schedule a month of social posts in one session. AI content suggestions built in. "Set it and forget it" social media management.</div><div class="tool-price">Free – $18/mo</div></div>
+      <div class="tool-card"><div class="tool-cat">Email Marketing</div><div class="tool-name">Mailchimp / Klaviyo</div><div class="tool-desc">Build and send email campaigns. AI writes the copy, you set the schedule. Huge for restaurants, salons, and ecommerce clients.</div><div class="tool-price">Free – $20/mo</div></div>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-label">Client Visibility</div>
+    <div class="block-heading">Get them found. Get them reviewed.</div>
+    <div class="tools-grid">
+      <div class="tool-card"><div class="tool-cat">Google Reviews</div><div class="tool-name">NiceJob / Birdeye</div><div class="tool-desc">Automate review requests via text or email after every appointment. Most clients go from 15 to 60+ reviews within 60 days. Biggest ROI service you can offer.</div><div class="tool-price">$75–$100/mo (pass to client)</div></div>
+      <div class="tool-card"><div class="tool-cat">SEO</div><div class="tool-name">Ubersuggest / Surfer</div><div class="tool-desc">Keyword research and content optimization. Use SurferSEO to write blog posts that rank. Show clients their Google ranking improving monthly.</div><div class="tool-price">Free – $29/mo</div></div>
+      <div class="tool-card"><div class="tool-cat">Website Builder</div><div class="tool-name">Framer / Carrd</div><div class="tool-desc">Build professional websites fast. Framer's AI generates a site from a prompt. Carrd is perfect for simple landing pages. Charge $500–$1500 per build.</div><div class="tool-price">Free – $25/mo</div></div>
+      <div class="tool-card"><div class="tool-cat">Paid Ads</div><div class="tool-name">Google Ads + Meta Ads</div><div class="tool-desc">Run local search and social ads for clients. Use AI to write copy. Even $300/month in ad spend generates 20+ leads for local businesses. You charge management on top.</div><div class="tool-price">Management fee: $200–$500/mo</div></div>
+    </div>
+  </div>
+
+  <div class="callout callout-action">
+    <div class="callout-label">💡 How to Package These Into a Service</div>
+    <p>Don't offer all 17 tools to one client. Pick 3–5 that solve their specific problem. Example for a dentist: Review automation (NiceJob) + Social content (ChatGPT + Canva + Buffer) + Google profile optimization = "New Patient Growth Package" at $800/month. Your cost to deliver: under $80/month.</p>
+  </div>
+
+  <div class="action-steps">
+    <div class="action-steps-title">✦ Module 3 Action Steps</div>
+    <div class="action-step"><div class="action-num">1</div><div class="action-text"><strong>Sign up for free tiers</strong> of ChatGPT, Canva, Buffer, and Zapier. Spend 20 minutes with each — just know what they produce.</div></div>
+    <div class="action-step"><div class="action-num">2</div><div class="action-text"><strong>Build your first sample deliverable.</strong> Use ChatGPT to write 5 social captions for a fictional client. Design one in Canva. That's your portfolio.</div></div>
+    <div class="action-step"><div class="action-num">3</div><div class="action-text"><strong>Design your service package.</strong> Pick 3–4 tools, bundle them into one offer with a name, what's included, and a monthly price. Write it down.</div></div>
+  </div>
+
+  <div class="module-nav">
+    <button class="mod-nav-btn" onclick="showModule(2)">← Module 2</button>
+    <button class="mod-nav-btn primary" onclick="showModule(4)">Module 4 — Revenue &amp; Scale →</button>
+  </div>
+</div>
+
+<!-- MODULE 4 -->
+<div class="module-pane" id="mod4">
+  <div class="module-header">
+    <div class="mod-number">Module 4 of 4</div>
+    <div class="mod-title">Revenue &amp; Scale</div>
+    <p class="mod-intro">How to price your services, structure recurring revenue, go from 1 client to 5, and bring in clan members when you're ready to multiply your output.</p>
+    <div class="mod-time">⏱ 15 min read · This is the money module</div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-label">Pricing</div>
+    <div class="block-heading">The 3-Tier Pricing Model</div>
+    <div class="block-body">
+      <p>Never quote a single price. Always give clients three options. This eliminates the yes/no decision and makes the middle option feel like the obvious choice. <strong>Most clients pick the middle tier.</strong></p>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-tier">Starter</div>
+        <div class="pricing-price">$500<span style="font-size:1rem;font-weight:400;color:var(--muted)">/mo</span></div>
+        <div class="pricing-period">Best for businesses just starting out</div>
+        <div class="pricing-feature">Google profile optimization</div>
+        <div class="pricing-feature">8 social media posts/month</div>
+        <div class="pricing-feature">Review request automation</div>
+        <div class="pricing-feature">Monthly performance report</div>
+      </div>
+      <div class="pricing-card featured">
+        <div class="pricing-tier">Growth ✦ Most Popular</div>
+        <div class="pricing-price">$1,200<span style="font-size:1rem;font-weight:400;color:var(--muted)">/mo</span></div>
+        <div class="pricing-period">Best for businesses ready to grow fast</div>
+        <div class="pricing-feature">Everything in Starter</div>
+        <div class="pricing-feature">20 social posts/month</div>
+        <div class="pricing-feature">1 short-form video/week</div>
+        <div class="pricing-feature">Email campaign (2x/month)</div>
+        <div class="pricing-feature">Google Ads management</div>
+        <div class="pricing-feature">Bi-weekly strategy call</div>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-tier">Premium</div>
+        <div class="pricing-price">$2,500<span style="font-size:1rem;font-weight:400;color:var(--muted)">/mo</span></div>
+        <div class="pricing-period">Full-service for serious businesses</div>
+        <div class="pricing-feature">Everything in Growth</div>
+        <div class="pricing-feature">Website creation or redesign</div>
+        <div class="pricing-feature">AI chatbot for their website</div>
+        <div class="pricing-feature">4 videos/month</div>
+        <div class="pricing-feature">Full ad management (Google + Meta)</div>
+        <div class="pricing-feature">Weekly check-ins</div>
+      </div>
+    </div>
+    <div class="callout callout-warning">
+      <div class="callout-label">⚡ Key Pricing Rule</div>
+      <p>Never negotiate your price down. Instead, remove a service to meet their budget. This keeps your value intact and often makes them reconsider the full package. "I can do $800/month but that removes the video content and ad management — does that still solve your main problem?"</p>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-label">Retention</div>
+    <div class="block-heading">Why Recurring Revenue Changes Everything</div>
+    <div class="block-body">
+      <p>One client at $1,200/month is worth $14,400/year. Five clients is $72,000/year. <strong>You do not need to keep selling once your retainers are full.</strong></p>
+      <p>Clients stay when they see results. Send a monthly report showing what you did and what it produced. Even a screenshot showing their reviews went from 12 to 34 is enough to keep them paying. Make the value visible every month.</p>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <div class="block-label">Scaling with the Clan</div>
+    <div class="block-heading">From Solo to Team — The Revenue Share Model</div>
+    <div class="block-body">
+      <p>When you have more clients than you can handle solo, bring in clan members. You keep the client relationship. A clan member delivers one specific service. You split the margin.</p>
+      <p><strong>Example:</strong> You charge a client $1,200/month. You bring in a clan member to do video editing for $200. You keep $1,000. The clan member serves 5 clients and earns $1,000/month working part-time from anywhere. That's how the clan compounds.</p>
+    </div>
+    <div class="callout callout-action">
+      <div class="callout-label">📈 The Path From $0 to $5K/Month</div>
+      <p>
+        <strong>Month 1:</strong> Land your first client. $500–$1,200/month. Deliver obsessively.<br/>
+        <strong>Month 2:</strong> Land 2 more using a testimonial from Client 1. $1,500–$3,600/month.<br/>
+        <strong>Month 3:</strong> Land 2 more. Bring in a clan member for delivery. $2,500–$6,000/month.<br/>
+        <strong>Month 4–6:</strong> Systemize delivery. 5 clients. Add higher-tier upgrades. $5,000–$12,000/month.
+      </p>
+    </div>
+  </div>
+
+  <div class="action-steps">
+    <div class="action-steps-title">✦ Module 4 Action Steps — You're Ready to Close</div>
+    <div class="action-step"><div class="action-num">1</div><div class="action-text"><strong>Set your prices.</strong> Decide your Starter, Growth, and Premium price points for your niche. Write them down.</div></div>
+    <div class="action-step"><div class="action-num">2</div><div class="action-text"><strong>Close your first client.</strong> You have the script, niche, tools, and pricing. The only thing left is to make the call.</div></div>
+    <div class="action-step"><div class="action-num">3</div><div class="action-text"><strong>Deliver better than expected</strong> in month 1. Over-communicate. Send weekly updates. Make them feel it was the best decision they made.</div></div>
+    <div class="action-step"><div class="action-num">4</div><div class="action-text"><strong>Get a testimonial by day 30.</strong> One sentence. That's your next 10 cold calls solved.</div></div>
+  </div>
+
+  <div class="callout callout-key" style="margin-top:2.5rem">
+    <div class="callout-label">🏁 You've Completed The Blueprint</div>
+    <p>You now have: a niche, a positioning statement, a lead list, cold call scripts, a tools stack, and a pricing model. Everything you need to close your first client is in your hands. The only variable now is execution. Get in the community. Post your first win.</p>
+  </div>
+
+  <div class="module-nav">
+    <button class="mod-nav-btn" onclick="showModule(3)">← Module 3</button>
+    <a href="/welcome.html" class="mod-nav-btn primary">Back to Dashboard →</a>
+  </div>
+</div>
+
 <script>
-if(!localStorage.getItem('blueprint-access-code')){window.location.href='index.html'}
-</script>
-<script>
-const c=document.getElementById('stars'),ctx=c.getContext('2d');let W,H,stars=[];function init(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;stars=[];for(let i=0;i<220;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.2+0.2,o:Math.random()*0.5+0.1,s:Math.random()*0.0003+0.0001})}function draw(){ctx.clearRect(0,0,W,H);stars.forEach(s=>{s.o+=s.s;if(s.o>0.7||s.o<0.1)s.s*=-1;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(212,168,67,${s.o})`;ctx.fill()});requestAnimationFrame(draw)}window.addEventListener('resize',init);init();draw();
+function showModule(n){
+  document.querySelectorAll('.module-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('mod'+n).classList.add('active');
+  document.querySelectorAll('.tab-btn')[n-1].classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
 </script>
 </body>
 </html>
