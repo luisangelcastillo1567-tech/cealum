@@ -98,11 +98,6 @@
 </div>
 
 <script>
-// Check access
-if(!localStorage.getItem('blueprint-access-code')){
-  window.location.href='index.html';
-}
-
 let currentTopic = 'general';
 
 function selectTopic(topic){
@@ -132,30 +127,149 @@ function addMessage(role, text){
   chatArea.scrollTop = chatArea.scrollHeight;
 }
 
+const KNOWLEDGE = {
+  niche: `Top 5 niches for AI agencies right now:<br><br>
+1. <strong>Restaurants & Food Service</strong> — Need online ordering automation, review management, social content. They're overwhelmed and underpaid.<br>
+2. <strong>Real Estate Agents</strong> — Lead follow-up automation, listing descriptions, email drips. High value clients.<br>
+3. <strong>Gyms & Fitness Studios</strong> — Member retention automation, social content, chatbots for class booking.<br>
+4. <strong>Med Spas & Salons</strong> — Appointment reminders, review collection, before/after content creation.<br>
+5. <strong>Local Service Contractors</strong> — Plumbers, electricians, HVAC. They have money but zero marketing. Easy wins.<br><br>
+<strong>Your move:</strong> Pick ONE niche. Don't scatter. The riches are in the niches.`,
+
+  positioning: `Your positioning formula:<br><br>
+<strong>"I help [niche] in [city] get [result] without [frustration]"</strong><br><br>
+Examples:<br>
+• "I help Las Vegas restaurants get 30+ Google reviews per month without asking customers manually."<br>
+• "I help Vegas gym owners keep members longer without running promos every week."<br>
+• "I help real estate agents in Henderson follow up with every lead automatically without hiring an assistant."<br><br>
+<strong>The rule:</strong> Lead with the result, not the tool. Nobody cares that you use AI — they care what it does for them.`,
+
+  coldcall: `<strong>Word-for-word opening script:</strong><br><br>
+"Hi, is this [Owner Name]? Hey, this is [Your Name] — I work with [niche] businesses in [City] helping them get more [reviews/leads/bookings] using AI automation. I'm not trying to sell you anything today — I just had 2 minutes and wanted to see if [specific problem] is something you're dealing with right now. Is it?"<br><br>
+<strong>Top 3 objections:</strong><br>
+• "We're busy" → "That's exactly why I called. My clients say it takes 20 minutes to set up and runs itself. Can I show you in 10 minutes?"<br>
+• "We tried marketing before" → "Fair. What didn't work? I only take clients where I know I can get results."<br>
+• "Send me info" → "I'd rather just show you on a quick screen share — I can do Tuesday or Thursday, which works?"<br><br>
+<strong>Rule:</strong> Always end with a binary choice for next step. Never leave it open.`,
+
+  tools: `<strong>The AI Stack — 17 tools in 3 categories:</strong><br><br>
+📝 <strong>Content & Copy</strong><br>
+ChatGPT / Claude — write everything<br>
+Midjourney — images, logos, ads<br>
+Canva AI — social posts, flyers<br>
+CapCut / Runway — video editing<br>
+ElevenLabs — AI voiceovers<br><br>
+⚙️ <strong>Automation & Systems</strong><br>
+Zapier / Make — connect apps, trigger automations<br>
+ManyChat — Instagram/FB DM automation<br>
+Voiceflow — chatbot builder<br>
+Buffer / Later — social scheduling<br>
+Mailchimp / Klaviyo — email sequences<br><br>
+📍 <strong>Client Visibility</strong><br>
+NiceJob / Birdeye — review collection<br>
+Ubersuggest / Surfer — SEO<br>
+Framer / Carrd — landing pages<br>
+Google + Meta Ads — paid traffic<br><br>
+<strong>Start with:</strong> ChatGPT + Canva + Zapier + NiceJob. That's 80% of what clients need.`,
+
+  pricing: `<strong>3-Tier Pricing System:</strong><br><br>
+🟢 <strong>Starter — $500/mo</strong><br>
+• Monthly content (12 posts)<br>
+• Reputation management (review requests)<br>
+• Monthly report<br>
+Best for: first clients, small businesses<br><br>
+🔵 <strong>Growth — $1,200/mo</strong><br>
+• Everything in Starter<br>
+• Lead capture chatbot<br>
+• Email automation sequence<br>
+• Bi-weekly check-in<br>
+Best for: businesses wanting real results<br><br>
+🟣 <strong>Premium — $2,500/mo</strong><br>
+• Everything in Growth<br>
+• Paid ads management<br>
+• Full AI sales funnel<br>
+• Weekly calls<br>
+Best for: scaling businesses, high-ticket clients<br><br>
+<strong>Key rule:</strong> Never do one-time projects. Always monthly retainers. Recurring revenue = freedom.`,
+
+  maps: `<strong>The Google Maps Method:</strong><br><br>
+1. Go to Google Maps, search "[niche] in [your city]"<br>
+2. Filter by rating: 3.5–4.2 stars (too low = problems, too high = don't need you)<br>
+3. Look for pain signals: under 50 reviews, last review was 6+ months ago, no website link<br>
+4. Get their number from the listing<br>
+5. Call during off-peak hours (Tue–Thu, 2–4pm)<br><br>
+<strong>Target list goal:</strong> 20 calls per day = 100/week. At a 10% close rate, that's 2 new clients per week.`,
+
+  discovery: `<strong>10-Minute Discovery Call Structure:</strong><br><br>
+Min 1–2: Rapport. "How long have you been running [business]? What's working well right now?"<br><br>
+Min 3–5: Pain. "What's the biggest headache with getting new customers? How are you handling reviews right now?"<br><br>
+Min 6–8: Dream. "If that was fixed, what would change for you? What would 20 more reviews per month mean?"<br><br>
+Min 9–10: Close. "I can put together a quick plan for you. The investment is [price]. Want to get started this week or next?"<br><br>
+<strong>Never pitch during pain. Let them convince themselves.`,
+
+  income: `<strong>Your $0 → $5K path:</strong><br><br>
+Week 1–2: Build your pitch + outreach list (100 businesses)<br>
+Week 3–4: 20 calls/day → 2 discovery calls/day<br>
+Month 1 goal: 2 clients at $500 = $1,000/mo recurring<br><br>
+Month 2: Deliver results, ask for referrals. Add 2 more clients.<br>
+Month 3: 6 clients × $800 avg = $4,800/mo<br><br>
+<strong>The compounding rule:</strong> Don't spend the first $3K. Reinvest into ads to fill your calendar faster.<br><br>
+One agency founder in the Clan hit $4,200/mo by month 4 with this exact path using only Google Maps and cold calls.`,
+
+  mindset: `The single reason most people fail: they wait until they feel ready.<br><br>
+You will never feel ready. The blueprint gives you the map. The only thing left is motion.<br><br>
+<strong>The 3 sovereigns laws:</strong><br>
+1. Take action before confidence arrives — confidence is a product of action, not a prerequisite<br>
+2. Your first client doesn't need you to be perfect — they need you to be useful<br>
+3. Every "no" is data. 10 no's = you're close to a yes<br><br>
+<strong>Your move today:</strong> Pick your niche. Write your positioning statement. Make 5 calls.`
+};
+
+function getResponse(text, topic){
+  const q = text.toLowerCase();
+  if(q.match(/niche|industry|market|vertical|sector|which business/)) return KNOWLEDGE.niche;
+  if(q.match(/position|pitch|how do i explain|describe|what do i say i do|formula/)) return KNOWLEDGE.positioning;
+  if(q.match(/cold call|script|phone|objection|handle|rejection|opening/)) return KNOWLEDGE.coldcall;
+  if(q.match(/tool|software|app|platform|stack|zapier|canva|chatgpt|automation/)) return KNOWLEDGE.tools;
+  if(q.match(/price|pricing|charge|rate|cost|package|tier|money|fee/)) return KNOWLEDGE.pricing;
+  if(q.match(/google maps|maps|prospect|lead|find client|where do i find|outreach/)) return KNOWLEDGE.maps;
+  if(q.match(/discovery|call|meeting|demo|close|structure|agenda/)) return KNOWLEDGE.discovery;
+  if(q.match(/income|revenue|earn|make money|first client|\$5k|path|timeline|month/)) return KNOWLEDGE.income;
+  if(q.match(/mindset|scared|nervous|ready|fear|doubt|confidence|motivation|believe/)) return KNOWLEDGE.mindset;
+
+  const topicMap = {
+    module1: KNOWLEDGE.niche,
+    module2: KNOWLEDGE.maps,
+    module3: KNOWLEDGE.tools,
+    module4: KNOWLEDGE.pricing,
+    coldcall: KNOWLEDGE.coldcall,
+    pricing: KNOWLEDGE.pricing,
+    general: null
+  };
+  if(topicMap[topic]) return topicMap[topic];
+
+  return `Good question. Here's the sovereign approach:<br><br>
+Everything in this blueprint comes down to three things: <strong>pick a niche, make calls, deliver results</strong>.<br><br>
+Can you be more specific? For example:<br>
+• "How do I find my first client?"<br>
+• "What's the cold call script?"<br>
+• "How should I price my services?"<br>
+• "Which tools do I need?"<br><br>
+I'll give you the exact answer.`;
+}
+
 function sendMessage(){
   const input = document.getElementById('userInput');
   const text = input.value.trim();
-
   if(!text) return;
-
   addMessage('user', text);
   input.value = '';
-
   showLoading(true);
-
-  // Simulate AI response (replace with actual Claude API call)
   setTimeout(() => {
-    const responses = [
-      "That's a great question. Based on the blueprint, here's what you need to know...",
-      "Excellent point. Let me break this down for you step by step...",
-      "This is one of the most important concepts in the blueprint. Here's why...",
-      "You're thinking like a sovereign. Here's the strategic approach..."
-    ];
-
-    const response = responses[Math.floor(Math.random() * responses.length)];
+    const response = getResponse(text, currentTopic);
     addMessage('assistant', response);
     showLoading(false);
-  }, 1000);
+  }, 700);
 }
 
 function showLoading(show){
