@@ -60,7 +60,7 @@
 </head>
 <body>
 <canvas id="stars"></canvas>
-<a href="dashboard.html" class="back-link">← Dashboard</a>
+<a href="/welcome.html" class="back-link">← Back to Hub</a>
 
 <div class="container">
   <!-- Sidebar -->
@@ -258,18 +258,44 @@ Can you be more specific? For example:<br>
 I'll give you the exact answer.`;
 }
 
-function sendMessage(){
+async function callOllama(message){
+  try {
+    const systemPrompt = 'You are the Sovereign Assistant, an expert guide for the Caelum AI Agency Blueprint. Help users start an AI agency with no code or experience. Be concise, direct, and always end with a clear action step. Keep responses under 300 words.';
+    const res = await fetch('http://localhost:11434/api/chat', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        model: 'kimi-k2.5:cloud',
+        messages: [
+          {role: 'system', content: systemPrompt},
+          {role: 'user', content: message}
+        ],
+        stream: false
+      }),
+      signal: AbortSignal.timeout(9000)
+    });
+    if(!res.ok) return null;
+    const data = await res.json();
+    return data.message?.content || null;
+  } catch(e){ return null; }
+}
+
+async function sendMessage(){
   const input = document.getElementById('userInput');
   const text = input.value.trim();
   if(!text) return;
   addMessage('user', text);
   input.value = '';
+  document.getElementById('sendBtn').disabled = true;
   showLoading(true);
-  setTimeout(() => {
-    const response = getResponse(text, currentTopic);
-    addMessage('assistant', response);
-    showLoading(false);
-  }, 700);
+  const aiReply = await callOllama(text);
+  if(aiReply){
+    addMessage('assistant', aiReply.replace(/\n/g,'<br>'));
+  } else {
+    addMessage('assistant', getResponse(text, currentTopic));
+  }
+  showLoading(false);
+  document.getElementById('sendBtn').disabled = false;
 }
 
 function showLoading(show){
