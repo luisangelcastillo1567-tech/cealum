@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Shop — CAELUM</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -41,12 +42,47 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .shop-main{max-width:1000px;margin:0 auto;padding:3rem 2rem 6rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
 @media(max-width:700px){.shop-main{grid-template-columns:1fr;gap:2rem}}
 
-/* PRODUCT IMAGE */
-.product-image-wrap{background:var(--card);border:0.5px solid var(--border2);border-radius:20px;padding:2.5rem;display:flex;align-items:center;justify-content:center;min-height:380px;position:relative;overflow:hidden}
+/* PRODUCT IMAGE VIEWER */
+.product-image-wrap{background:var(--card);border:0.5px solid var(--border2);border-radius:20px;padding:1.5rem 1.5rem 1rem;position:relative;overflow:hidden}
 .product-image-wrap::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--purple),var(--gold))}
-.product-placeholder{text-align:center}
-.product-icon-big{font-size:7rem;margin-bottom:1rem;filter:drop-shadow(0 0 30px rgba(201,168,76,0.3))}
-.product-image-label{font-size:0.7rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--dim)}
+
+/* Carousel shell */
+.pv-shell{position:relative;height:340px;perspective:1400px;overflow:hidden;border-radius:12px}
+.pv-track{position:relative;width:100%;height:100%}
+.pv-card{position:absolute;top:50%;left:50%;width:min(280px,72vw);aspect-ratio:1/1;transform-origin:center;transform:translate(-50%,-50%);transition:all .6s cubic-bezier(.25,.46,.45,.94);overflow:hidden;border-radius:10px}
+.pv-card img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;user-select:none}
+.pv-card.active{transform:translate(-50%,-50%) translateZ(0) scale(1);opacity:1;z-index:4;box-shadow:0 0 0 1px rgba(127,119,221,.5),0 30px 80px rgba(0,0,0,.7),0 0 60px rgba(83,74,183,.2)}
+.pv-card.active::before{content:'';position:absolute;inset:-2px;z-index:-1;border-radius:12px;background:linear-gradient(135deg,var(--purple),var(--purple-light),var(--gold),var(--purple));background-size:300% 300%;animation:pvfg 3s linear infinite;opacity:.6}
+@keyframes pvfg{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.pv-card.left{transform:translate(calc(-50% - min(220px,38vw)),-50%) translateZ(-150px) rotateY(18deg) scale(.72);opacity:.35;z-index:2}
+.pv-card.right{transform:translate(calc(-50% + min(220px,38vw)),-50%) translateZ(-150px) rotateY(-18deg) scale(.72);opacity:.35;z-index:2}
+.pv-card.gone-l{transform:translate(-50%,-50%) translateX(-100vw) translateZ(-400px) scale(.4);opacity:0;z-index:1;pointer-events:none}
+.pv-card.gone-r{transform:translate(-50%,-50%) translateX(100vw) translateZ(-400px) scale(.4);opacity:0;z-index:1;pointer-events:none}
+
+/* Arrows */
+.pv-arr{position:absolute;top:50%;z-index:10;transform:translateY(-50%);width:36px;height:36px;border:0.5px solid var(--border2);background:rgba(5,4,14,.7);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .22s;border-radius:50%}
+.pv-arr:hover{background:rgba(83,74,183,.35);border-color:var(--purple-light)}
+.pv-arr svg{width:14px;height:14px;stroke:var(--muted);fill:none;stroke-width:2}
+.pv-arr:hover svg{stroke:#fff}
+.pv-al{left:10px}.pv-ar{right:10px}
+
+/* Thumbnails */
+.pv-thumbs{display:flex;gap:8px;padding:12px 0 4px;overflow-x:auto;scroll-behavior:smooth}
+.pv-thumbs::-webkit-scrollbar{height:3px}
+.pv-thumbs::-webkit-scrollbar-thumb{background:var(--purple);border-radius:2px}
+.pv-thumb{flex-shrink:0;width:52px;aspect-ratio:1;border:0.5px solid var(--border);border-radius:6px;cursor:pointer;opacity:.4;transition:all .22s;overflow:hidden}
+.pv-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.pv-thumb:hover,.pv-thumb.on{opacity:1;border-color:var(--purple-light)}
+
+/* Dots & label */
+.pv-info{display:flex;align-items:center;gap:16px;margin-top:10px}
+.pv-dots{display:flex;gap:6px}
+.pv-dot{width:6px;height:6px;border-radius:50%;background:var(--border);cursor:pointer;transition:all .22s}
+.pv-dot:hover,.pv-dot.on{background:var(--purple-light)}
+.pv-meta{flex:1}
+.pv-name{font-size:.8rem;font-weight:700;color:var(--text);letter-spacing:.04em}
+.pv-sub{font-size:.65rem;letter-spacing:.1em;color:var(--dim);text-transform:uppercase}
+@media(max-width:700px){.pv-shell{height:260px}}
 
 /* PRODUCT DETAILS */
 .product-details{display:flex;flex-direction:column;gap:1.25rem}
@@ -117,11 +153,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 </section>
 
 <div class="shop-main">
-  <!-- Product Image -->
-  <div class="product-image-wrap">
-    <div class="product-placeholder">
-      <div class="product-icon-big">🧢</div>
-      <div class="product-image-label">HECHIZO — First Drop</div>
+  <!-- Product Image — 3D Box Viewer -->
+  <div class="product-image-wrap" style="padding:0;overflow:hidden;position:relative;min-height:400px">
+    <!-- 3D Canvas -->
+    <div id="hx-canvas" style="width:100%;height:400px;position:relative;overflow:hidden;border-radius:20px;background:#050508"></div>
+    <!-- Overlays -->
+    <div style="position:absolute;top:18px;left:0;right:0;text-align:center;pointer-events:none;z-index:5">
+      <div style="font-family:'Georgia',serif;letter-spacing:0.55em;font-size:1.05rem;font-weight:400;background:linear-gradient(135deg,#c0c0c0,#c084fc,#a855f7,#c9a84c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-transform:uppercase;filter:drop-shadow(0 0 14px rgba(168,85,247,0.5))">HECHIZO</div>
+      <div style="font-family:'Georgia',serif;font-size:0.48rem;letter-spacing:0.4em;color:rgba(192,132,252,0.45);text-transform:uppercase;margin-top:4px">Luxurious &amp; Mystical · Primera Colección</div>
+    </div>
+    <div style="position:absolute;bottom:14px;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:10px;z-index:5">
+      <div style="font-family:'Georgia',serif;font-size:0.45rem;letter-spacing:0.22em;color:rgba(192,132,252,0.3);text-transform:uppercase">Drag to rotate</div>
+      <button id="hx-lid-btn" onclick="hxToggleLid()" style="font-family:'Inter',sans-serif;font-size:0.6rem;font-weight:600;letter-spacing:0.22em;color:#c084fc;border:0.5px solid rgba(168,85,247,0.4);background:rgba(10,0,21,0.75);padding:8px 22px;text-transform:uppercase;cursor:pointer;backdrop-filter:blur(8px);border-radius:4px;transition:all 0.25s">Open / Close Lid</button>
     </div>
   </div>
 
@@ -199,6 +242,148 @@ function notifyMe(e){
     btn.style.background = '';
   }, 3000);
 }
+
+/* ── HECHIZO 3D Box Viewer ── */
+(function(){
+var container=document.getElementById('hx-canvas');
+var W=container.clientWidth,H=container.clientHeight;
+
+var scene=new THREE.Scene();
+scene.background=new THREE.Color(0x050508);
+scene.fog=new THREE.FogExp2(0x050508,0.055);
+
+var camera=new THREE.PerspectiveCamera(42,W/H,0.1,100);
+camera.position.set(0,1.0,5.5);
+
+var renderer=new THREE.WebGLRenderer({antialias:true});
+renderer.setSize(W,H);
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.shadowMap.enabled=true;
+renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+container.appendChild(renderer.domElement);
+renderer.domElement.style.width='100%';
+renderer.domElement.style.height='100%';
+
+scene.add(new THREE.AmbientLight(0x1a0a2e,1.2));
+var pL1=new THREE.PointLight(0xa855f7,3.5,12);pL1.position.set(-2.5,4,2.5);pL1.castShadow=true;scene.add(pL1);
+var pL2=new THREE.PointLight(0xc9a84c,1.8,10);pL2.position.set(2.5,2,1.5);scene.add(pL2);
+var pL3=new THREE.PointLight(0x7b2fbe,2.5,14);pL3.position.set(0,-2,3.5);scene.add(pL3);
+
+function makeTex(fn,size){
+  size=size||512;
+  var c=document.createElement('canvas');c.width=c.height=size;
+  var ctx=c.getContext('2d');fn(ctx,size);
+  var t=new THREE.CanvasTexture(c);t.anisotropy=renderer.capabilities.getMaxAnisotropy();return t;
+}
+function addNoise(ctx,s,color,alpha,count){count=count||600;for(var i=0;i<count;i++){ctx.fillStyle='rgba('+color+','+Math.random()*alpha+')';ctx.fillRect(Math.random()*s,Math.random()*s,1+Math.random()*2,1+Math.random()*2);}}
+function drawStar(ctx,cx,cy,r,color){ctx.save();ctx.translate(cx,cy);ctx.fillStyle=color||'rgba(201,168,76,0.8)';ctx.beginPath();for(var i=0;i<5;i++){var a=(i*4*Math.PI/5)-Math.PI/2,a2=((i*4+2)*Math.PI/5)-Math.PI/2;i===0?ctx.moveTo(Math.cos(a)*r,Math.sin(a)*r):ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r);ctx.lineTo(Math.cos(a2)*r*0.42,Math.sin(a2)*r*0.42);}ctx.closePath();ctx.fill();ctx.restore();}
+function drawMoon(ctx,cx,cy,r,color){ctx.save();ctx.translate(cx,cy);ctx.fillStyle=color||'rgba(192,132,252,0.55)';ctx.beginPath();ctx.arc(0,0,r,0,Math.PI*2);ctx.fill();ctx.fillStyle='#06120a';ctx.beginPath();ctx.arc(r*0.45,-r*0.15,r*0.77,0,Math.PI*2);ctx.fill();ctx.restore();}
+
+var frontTex=makeTex(function(ctx,s){
+  var bg=ctx.createLinearGradient(0,0,s,s);bg.addColorStop(0,'#0c1a0e');bg.addColorStop(0.5,'#071209');bg.addColorStop(1,'#040d05');ctx.fillStyle=bg;ctx.fillRect(0,0,s,s);addNoise(ctx,s,'25,45,25',0.12,800);
+  var glow=ctx.createRadialGradient(s/2,s*0.15,0,s/2,s*0.15,s*0.4);glow.addColorStop(0,'rgba(168,85,247,0.22)');glow.addColorStop(1,'transparent');ctx.fillStyle=glow;ctx.fillRect(0,0,s,s);
+  ctx.strokeStyle='rgba(168,85,247,0.12)';ctx.lineWidth=1.2;for(var i=0;i<6;i++){ctx.beginPath();ctx.arc(s/2,s*0.13,s*0.1+i*14,0,Math.PI*2);ctx.stroke();}
+  drawMoon(ctx,s/2,s*0.17,s*0.075,'rgba(192,132,252,0.6)');
+  [[0.1,0.22],[0.88,0.18],[0.07,0.52],[0.93,0.58],[0.18,0.82],[0.82,0.78],[0.48,0.06],[0.32,0.9],[0.68,0.92]].forEach(function(p){drawStar(ctx,p[0]*s,p[1]*s,5+Math.random()*4);});
+  ctx.save();ctx.translate(s*0.11,s*0.66);ctx.strokeStyle='rgba(168,85,247,0.45)';ctx.lineWidth=1.4;ctx.beginPath();for(var t=0;t<6*Math.PI;t+=0.08){var r=t*4,x=Math.cos(t)*r,y=Math.sin(t)*r;t===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}ctx.stroke();ctx.restore();
+  ctx.save();ctx.font='bold '+Math.floor(s*0.135)+'px Georgia,serif';ctx.textAlign='center';ctx.textBaseline='middle';var tg=ctx.createLinearGradient(s*0.15,0,s*0.85,0);tg.addColorStop(0,'#c0c0c0');tg.addColorStop(0.25,'#c084fc');tg.addColorStop(0.5,'#a855f7');tg.addColorStop(0.75,'#c9a84c');tg.addColorStop(1,'#c0c0c0');ctx.fillStyle=tg;ctx.shadowColor='rgba(168,85,247,0.9)';ctx.shadowBlur=28;ctx.fillText('HECHIZO',s/2,s*0.5);ctx.restore();
+  ctx.save();ctx.font=Math.floor(s*0.042)+'px Georgia,serif';ctx.textAlign='center';ctx.fillStyle='rgba(201,168,76,0.7)';ctx.fillText('LUXURIOUS & MYSTICAL',s/2,s*0.63);ctx.restore();
+  var lg=ctx.createLinearGradient(s*0.1,0,s*0.9,0);lg.addColorStop(0,'transparent');lg.addColorStop(0.5,'rgba(201,168,76,0.45)');lg.addColorStop(1,'transparent');ctx.strokeStyle=lg;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(s*0.12,s*0.72);ctx.lineTo(s*0.88,s*0.72);ctx.stroke();
+  var dots=[[0.25,0.82],[0.38,0.78],[0.5,0.84],[0.62,0.78],[0.75,0.82]];dots.forEach(function(d,i){ctx.fillStyle='rgba(192,132,252,0.5)';ctx.beginPath();ctx.arc(d[0]*s,d[1]*s,2.5,0,Math.PI*2);ctx.fill();if(i>0){ctx.strokeStyle='rgba(192,132,252,0.18)';ctx.lineWidth=0.5;ctx.beginPath();ctx.moveTo(dots[i-1][0]*s,dots[i-1][1]*s);ctx.lineTo(d[0]*s,d[1]*s);ctx.stroke();}});
+},1024);
+
+function makeSideTex(flip){return makeTex(function(ctx,s){
+  var bg=ctx.createLinearGradient(0,0,s,s);bg.addColorStop(0,'#091508');bg.addColorStop(1,'#040d04');ctx.fillStyle=bg;ctx.fillRect(0,0,s,s);addNoise(ctx,s,'18,38,18',0.1,400);
+  ctx.save();if(flip){ctx.translate(s,0);ctx.scale(-1,1);}ctx.translate(s*0.45,s*0.5);ctx.strokeStyle='rgba(168,85,247,0.3)';ctx.lineWidth=1.3;ctx.beginPath();for(var t=0;t<5*Math.PI;t+=0.1){var r=t*5.5;t===0?ctx.moveTo(Math.cos(t)*r,Math.sin(t)*r):ctx.lineTo(Math.cos(t)*r,Math.sin(t)*r);}ctx.stroke();ctx.restore();
+  drawStar(ctx,s*0.5,s*0.5,8);drawMoon(ctx,s*(flip?0.25:0.75),s*0.28,s*0.07);
+},512);}
+
+var lidTopTex=makeTex(function(ctx,s){
+  var bg=ctx.createLinearGradient(0,0,s,s);bg.addColorStop(0,'#0c1a0e');bg.addColorStop(1,'#040d04');ctx.fillStyle=bg;ctx.fillRect(0,0,s,s);addNoise(ctx,s,'20,40,20',0.1,400);
+  drawMoon(ctx,s/2,s/2,s*0.14,'rgba(192,132,252,0.4)');
+  ctx.strokeStyle='rgba(201,168,76,0.18)';ctx.lineWidth=0.8;for(var i=0;i<12;i++){var a=(i/12)*Math.PI*2;ctx.beginPath();ctx.moveTo(s/2+Math.cos(a)*s*0.2,s/2+Math.sin(a)*s*0.2);ctx.lineTo(s/2+Math.cos(a)*s*0.44,s/2+Math.sin(a)*s*0.44);ctx.stroke();}
+  [[0.08,0.08],[0.92,0.08],[0.08,0.92],[0.92,0.92]].forEach(function(p){drawStar(ctx,p[0]*s,p[1]*s,5);});
+},512);
+
+var lidInTex=makeTex(function(ctx,s){
+  var bg=ctx.createRadialGradient(s/2,s/2,0,s/2,s/2,s*0.85);bg.addColorStop(0,'#6d28d9');bg.addColorStop(0.35,'#5b21b6');bg.addColorStop(0.7,'#4c1d95');bg.addColorStop(1,'#1e0050');ctx.fillStyle=bg;ctx.fillRect(0,0,s,s);
+  function drawFlower(cx,cy,r,petals){petals=petals||6;for(var i=0;i<petals;i++){var a=(i/petals)*Math.PI*2,px=cx+Math.cos(a)*r*0.62,py=cy+Math.sin(a)*r*0.62,g=ctx.createRadialGradient(px,py,0,px,py,r*0.82);g.addColorStop(0,'rgba(76,29,149,0.95)');g.addColorStop(1,'rgba(46,7,90,0.3)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(px,py,r*0.72,0,Math.PI*2);ctx.fill();}var cg=ctx.createRadialGradient(cx,cy,0,cx,cy,r*0.38);cg.addColorStop(0,'rgba(139,92,246,0.8)');cg.addColorStop(1,'rgba(109,40,217,0.4)');ctx.fillStyle=cg;ctx.beginPath();ctx.arc(cx,cy,r*0.38,0,Math.PI*2);ctx.fill();}
+  drawFlower(s/2,s/2,s*0.24,7);[[0.13,0.18],[0.87,0.18],[0.08,0.72],[0.92,0.72],[0.38,0.9],[0.62,0.9],[0.5,0.07]].forEach(function(p){drawFlower(p[0]*s,p[1]*s,s*0.1,5);});
+  for(var i=0;i<50;i++){ctx.fillStyle='rgba(255,255,255,'+(0.08+Math.random()*0.25)+')';ctx.beginPath();ctx.arc(Math.random()*s,Math.random()*s,0.5+Math.random()*2,0,Math.PI*2);ctx.fill();}
+},1024);
+
+var rightTex=makeSideTex(false),leftTex=makeSideTex(true);
+var BW=2.0,BH=1.75,BD=2.0,LH=0.1;
+
+var boxMesh=new THREE.Mesh(new THREE.BoxGeometry(BW,BH,BD),[
+  new THREE.MeshStandardMaterial({map:rightTex,roughness:0.55,metalness:0.12}),
+  new THREE.MeshStandardMaterial({map:leftTex,roughness:0.55,metalness:0.12}),
+  new THREE.MeshStandardMaterial({color:0x040d04,roughness:0.9}),
+  new THREE.MeshStandardMaterial({color:0x040d04,roughness:0.8}),
+  new THREE.MeshStandardMaterial({map:frontTex,roughness:0.45,metalness:0.08}),
+  new THREE.MeshStandardMaterial({map:frontTex,roughness:0.45,metalness:0.08})
+]);
+boxMesh.castShadow=true;
+
+var lidPivot=new THREE.Group();
+lidPivot.position.set(0,BH/2+LH/2,-BD/2);
+var lidMesh=new THREE.Mesh(new THREE.BoxGeometry(BW+0.06,LH,BD+0.06),[
+  new THREE.MeshStandardMaterial({map:rightTex,roughness:0.5}),
+  new THREE.MeshStandardMaterial({map:leftTex,roughness:0.5}),
+  new THREE.MeshStandardMaterial({map:lidTopTex,roughness:0.45,metalness:0.08}),
+  new THREE.MeshStandardMaterial({map:lidInTex,roughness:0.25,metalness:0.04}),
+  new THREE.MeshStandardMaterial({map:frontTex,roughness:0.5}),
+  new THREE.MeshStandardMaterial({map:frontTex,roughness:0.5})
+]);
+lidMesh.position.set(0,0,BD/2);lidMesh.castShadow=true;lidPivot.add(lidMesh);
+
+var ring=new THREE.Mesh(new THREE.RingGeometry(1.3,2.2,64),new THREE.MeshBasicMaterial({color:0xa855f7,transparent:true,opacity:0.07,side:THREE.DoubleSide}));
+ring.rotation.x=-Math.PI/2;ring.position.y=-BH/2+0.02;
+
+var group=new THREE.Group();
+group.add(boxMesh);group.add(lidPivot);group.add(ring);scene.add(group);
+
+var PC=180,pArr=new Float32Array(PC*3),pV=[];
+for(var i=0;i<PC;i++){pArr[i*3]=(Math.random()-0.5)*14;pArr[i*3+1]=(Math.random()-0.5)*9;pArr[i*3+2]=(Math.random()-0.5)*14;pV.push({x:(Math.random()-0.5)*0.004,y:Math.random()*0.004+0.001,z:(Math.random()-0.5)*0.004});}
+var pGeo=new THREE.BufferGeometry();pGeo.setAttribute('position',new THREE.BufferAttribute(pArr,3));
+scene.add(new THREE.Points(pGeo,new THREE.PointsMaterial({color:0xa855f7,size:0.035,transparent:true,opacity:0.55})));
+
+var rotX=-0.15,rotY=-0.5,velX=0,velY=0.004,dragging=false,px=0,py=0;
+var lidOpen=false,lidAngle=0,lidTarget=0,autoRot=true;
+
+window.hxToggleLid=function(){lidOpen=!lidOpen;lidTarget=lidOpen?-Math.PI*0.8:0;};
+
+renderer.domElement.addEventListener('mousedown',function(e){dragging=true;px=e.clientX;py=e.clientY;autoRot=false;velX=0;velY=0;});
+window.addEventListener('mouseup',function(){dragging=false;});
+window.addEventListener('mousemove',function(e){if(!dragging)return;velY=(e.clientX-px)*0.012;velX=(e.clientY-py)*0.006;rotY+=velY;rotX+=velX;rotX=Math.max(-0.65,Math.min(0.65,rotX));px=e.clientX;py=e.clientY;});
+renderer.domElement.addEventListener('touchstart',function(e){dragging=true;px=e.touches[0].clientX;py=e.touches[0].clientY;autoRot=false;},{passive:true});
+window.addEventListener('touchend',function(){dragging=false;});
+window.addEventListener('touchmove',function(e){if(!dragging)return;velY=(e.touches[0].clientX-px)*0.012;velX=(e.touches[0].clientY-py)*0.006;rotY+=velY;rotX+=velX;rotX=Math.max(-0.65,Math.min(0.65,rotX));px=e.touches[0].clientX;py=e.touches[0].clientY;});
+
+setTimeout(function(){lidOpen=true;lidTarget=-Math.PI*0.8;},1800);
+
+var clock=new THREE.Clock();
+(function animate(){
+  requestAnimationFrame(animate);
+  var t=clock.getElapsedTime();
+  group.position.y=Math.sin(t*0.65)*0.07;
+  if(!dragging){if(autoRot)rotY+=0.006;rotY+=velY;velY*=0.94;rotX+=velX;velX*=0.94;rotX=Math.max(-0.65,Math.min(0.65,rotX));}
+  group.rotation.y=rotY;group.rotation.x=rotX;
+  lidAngle+=(lidTarget-lidAngle)*0.065;lidPivot.rotation.x=lidAngle;
+  pL1.intensity=3.0+Math.sin(t*1.3)*0.9;pL2.intensity=1.5+Math.sin(t*0.85+1.2)*0.5;
+  var pa=pGeo.attributes.position.array;
+  for(var i=0;i<PC;i++){pa[i*3]+=pV[i].x;pa[i*3+1]+=pV[i].y;pa[i*3+2]+=pV[i].z;if(pa[i*3+1]>5)pa[i*3+1]=-4.5;if(Math.abs(pa[i*3])>7)pV[i].x*=-1;if(Math.abs(pa[i*3+2])>7)pV[i].z*=-1;}
+  pGeo.attributes.position.needsUpdate=true;
+  ring.material.opacity=0.05+Math.sin(t*0.9)*0.04;
+  renderer.render(scene,camera);
+})();
+
+window.addEventListener('resize',function(){
+  var nW=container.clientWidth,nH=container.clientHeight;
+  camera.aspect=nW/nH;camera.updateProjectionMatrix();
+  renderer.setSize(nW,nH);
+});
+})();
 </script>
 </body>
 </html>
